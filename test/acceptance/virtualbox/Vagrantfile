@@ -1,0 +1,17 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# plugins don't seem to be auto-loaded from the bundle
+require 'vagrant-omnibus'
+
+Vagrant.configure("2") do |config|
+  config.omnibus.chef_version = '11.4.0'
+
+  config.vm.box = "canonical-ubuntu-12.04"
+  config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
+
+  config.vm.provision :chef_solo do |chef|
+    chef.cookbooks_path = File.expand_path("../../../support/cookbooks", __FILE__)
+    chef.add_recipe "chef-inator"
+  end
+end
