@@ -14,7 +14,7 @@ module VagrantPlugins
       end
 
       def finalize!
-        @chef_version = nil if @require_chef_version == UNSET_VALUE
+        @chef_version = nil if @chef_version == UNSET_VALUE
       end
     end
   end
