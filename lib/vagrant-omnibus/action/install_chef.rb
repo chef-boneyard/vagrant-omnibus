@@ -12,11 +12,11 @@ module VagrantPlugins
           @app = app
           # Config#finalize! SHOULD be called automatically
           env[:global_config].omnibus.finalize!
-          env["omnibus.desired_chef_version"] ||= env[:global_config].omnibus.chef_version
         end
 
         def call(env)
-          desired_chef_version = env["omnibus.desired_chef_version"]
+          desired_chef_version = env[:global_config].omnibus.chef_version
+
           unless desired_chef_version.nil?
             env[:ui].info("Ensuring Chef is installed at requested version of #{desired_chef_version}.")
             if env[:installed_chef_version] == desired_chef_version
@@ -26,6 +26,7 @@ module VagrantPlugins
               env[:ssh_run_command] = install_chef_command(desired_chef_version)
             end
           end
+
           @app.call(env)
         end
 
