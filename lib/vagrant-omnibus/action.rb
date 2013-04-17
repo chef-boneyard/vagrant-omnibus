@@ -3,6 +3,7 @@ require "vagrant/action/builder"
 module VagrantPlugins
   module Omnibus
     module Action
+      autoload :InstallPrereqs, File.expand_path("../action/install_prereqs", __FILE__)
       autoload :InstallChef, File.expand_path("../action/install_chef", __FILE__)
       autoload :IsRunning, File.expand_path("../action/is_running", __FILE__)
       autoload :ReadChefVersion, File.expand_path("../action/read_chef_version", __FILE__)
@@ -20,10 +21,24 @@ module VagrantPlugins
               b2.use ReadChefVersion
               b2.use InstallChef
               b2.use SSHRun
-            end
-          end
-        end
+            end            
+          end          
+        end        
       end
+
+      def self.install_prereqs
+        @install_prereqs ||= ::Vagrant::Action::Builder.new.tap do |b|
+          b.use ConfigValidate
+          b.use Call, IsRunning do |env1, b2|
+            if env1[:result]
+              b2.use ReadChefVersion
+              b2.use InstallPrereqs
+              b2.use SSHRun
+            end            
+          end          
+        end        
+      end
+      
     end
   end
 end

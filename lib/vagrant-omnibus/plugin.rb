@@ -23,7 +23,8 @@ module VagrantPlugins
       def self.provision(hook)
 
         hook.after(Vagrant::Action::Builtin::Provision, Action.install_chef)
-
+        hook.after(Vagrant::Action::Builtin::Provision, Action.install_prereqs)
+        
         # BEGIN workaround
         #
         # Currently hooks attached to {Vagrant::Action::Builtin::Provision} are
@@ -35,6 +36,7 @@ module VagrantPlugins
 
         if VagrantPlugins.const_defined?("AWS")
           hook.after(VagrantPlugins::AWS::Action::RunInstance, Action.install_chef)
+          hook.after(VagrantPlugins::AWS::Action::RunInstance, Action.install_prereqs)
         end
 
         if VagrantPlugins.const_defined?("Rackspace")
@@ -44,9 +46,13 @@ module VagrantPlugins
         # END workaround
       end
 
+      action_hook(:install_prereqs, :machine_action_up, &method(:provision))
+      action_hook(:install_prereqs, :machine_action_provision, &method(:provision))
+      
       action_hook(:install_chef, :machine_action_up, &method(:provision))
       action_hook(:install_chef, :machine_action_provision, &method(:provision))
 
+      
       config(:omnibus) do
         require_relative "config"
         Config
