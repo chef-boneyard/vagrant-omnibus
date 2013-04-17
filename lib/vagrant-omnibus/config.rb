@@ -24,6 +24,18 @@ module VagrantPlugins
         end
       end
 
+      def validate(machine)
+        errors = []
+
+        unless valid_chef_version?(chef_version)
+          msg = "'#{chef_version}' is not a valid version of Chef."
+          msg << "\n\n A list of valid versions can be found at: http://www.opscode.com/chef/install/"
+          errors << msg
+        end
+
+        { "Omnibus Plugin" => errors }
+      end
+
       private
 
       # Query RubyGems.org's Ruby API and retrive the latest version of Chef.
@@ -47,6 +59,18 @@ module VagrantPlugins
         latest_version = spec && spec.version
 
         latest_version
+      end
+
+      # Query RubyGems.org's Ruby API to see if the user-provided Chef version
+      # is in fact a real Chef version!
+      def valid_chef_version?(version)
+        is_valid = false
+        begin
+          available = dependency_installer.find_gems_with_sources(chef_gem_dependency(version))
+          is_valid = true if available.any?
+        rescue
+        end
+        is_valid
       end
 
       def dependency_installer
