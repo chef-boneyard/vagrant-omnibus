@@ -56,8 +56,6 @@ module VagrantPlugins
 
       # Query RubyGems.org's Ruby API and retrive the latest version of Chef.
       def retrieve_latest_chef_version
-        latest_version = nil
-
         available_gems = dependency_installer.find_gems_with_sources(chef_gem_dependency)
         spec, source = if available_gems.respond_to?(:last)
                           # DependencyInstaller sorts the results such that the last one is
@@ -72,9 +70,7 @@ module VagrantPlugins
                           best_gem && [best_gem.spec, best_gem.source]
                         end
 
-        latest_version = spec && spec.version
-
-        latest_version
+        spec && spec.version.to_s
       end
 
       # Query RubyGems.org's Ruby API to see if the user-provided Chef version

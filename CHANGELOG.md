@@ -1,3 +1,10 @@
+## 1.0.2 (unreleased)
+
+BUG FIXES:
+
+* convert `Gem::Version` returned by `#retrieve_latest_chef_version` to a
+  string. fixes [GH-2] for realz.
+
 ## 1.0.1 (April 17, 2013)
 
 IMPROVEMENTS:
