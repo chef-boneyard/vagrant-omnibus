@@ -5,7 +5,7 @@
 require 'vagrant-omnibus'
 
 Vagrant.configure("2") do |config|
-  config.omnibus.chef_version = '11.4.0'
+  config.omnibus.chef_version = :latest
 
   config.vm.box = "canonical-ubuntu-12.04"
   config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
