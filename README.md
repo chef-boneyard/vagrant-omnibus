@@ -1,5 +1,10 @@
 # vagrant-omnibus
 
+[![Gem Version](https://badge.fury.io/rb/vagrant-omnibus.png)](https://badge.fury.io/rb/vagrant-omnibus.png)
+[![Build Status](https://travis-ci.org/schisamo/vagrant-omnibus.png?branch=master)](https://travis-ci.org/schisamo/vagrant-omnibus)
+[![Dependency Status](https://gemnasium.com/schisamo/vagrant-omnibus.png)](https://gemnasium.com/schisamo/vagrant-omnibus)
+[![Code Climate](https://codeclimate.com/github/schisamo/vagrant-omnibus.png)](https://codeclimate.com/github/schisamo/vagrant-omnibus)
+
 A Vagrant plugin that ensures the desired version of Chef is installed via the
 platform-specific Omnibus packages. This proves very useful when using Vagrant
 with provisioner-less baseboxes OR cloud images.
