@@ -79,7 +79,7 @@ module VagrantPlugins
         is_valid = false
         begin
           available = dependency_installer.find_gems_with_sources(chef_gem_dependency(version))
-          is_valid = true if available.any?
+          is_valid = true unless available.empty?
         rescue
         end
         is_valid
