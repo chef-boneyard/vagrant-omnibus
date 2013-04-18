@@ -8,7 +8,7 @@ YARD::Rake::YardocTask.new
 namespace :test do
 
   RSpec::Core::RakeTask.new(:unit) do |t|
-    t.pattern = "test/unit/**/*_test.rb"
+    t.pattern = "test/unit/**/*_spec.rb"
   end
 
   desc "Run acceptance tests..these actually launch Vagrant sessions."

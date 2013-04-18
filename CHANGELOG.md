@@ -1,5 +1,9 @@
 ## 1.0.2 (unreleased)
 
+IMPROVEMENTS:
+
+* unit test coverage for `VagrantPlugins::Omnibus::Config`
+
 BUG FIXES:
 
 * convert `Gem::Version` returned by `#retrieve_latest_chef_version` to a
