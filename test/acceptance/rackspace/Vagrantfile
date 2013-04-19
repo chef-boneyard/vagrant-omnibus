@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# plugins don't seem to be auto-loaded from the bundle
+require 'vagrant-omnibus'
+require 'vagrant-rackspace'
+
+Vagrant.configure("2") do |config|
+  config.omnibus.chef_version = '11.4.0'
+
+  config.vm.box = "dummy"
+  config.vm.provider :rackspace do |rackspace|
+    rackspace.username = ENV['DEV_RACKSPACE_USERNAME']
+    rackspace.api_key = ENV['DEV_RACKSPACE_API_KEY']
+    rackspace.flavor = /512MB/
+    rackspace.image = /Ubuntu 12.04/
+    rackspace.public_key_path = "~/.ssh/id_rsa.pub"
+    # TODO - switch this to the `override.ssh.private_key_path` syntax once
+    # `vagrant-rackspace` is updated.
+    config.ssh.private_key_path = "~/.ssh/id_rsa"
+  end
+
+  config.vm.provision :chef_solo do |chef|
+    chef.cookbooks_path = File.expand_path("../../../support/cookbooks", __FILE__)
+    chef.add_recipe "chef-inator"
+  end
+end

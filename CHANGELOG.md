@@ -3,6 +3,7 @@
 IMPROVEMENTS:
 
 * unit test coverage for `VagrantPlugins::Omnibus::Config`
+* Add Rackspace provider acceptance test.
 
 BUG FIXES:
 

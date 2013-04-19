@@ -14,9 +14,11 @@ namespace :test do
   desc "Run acceptance tests..these actually launch Vagrant sessions."
   task :acceptance do
 
-    # ensure AWS dummy box is installed
-    unless system("vagrant box list | grep dummy &>/dev/null")
-      system("vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box")
+    # ensure all required dummy boxen are installed
+    %w{ aws rackspace }.each do |provider|
+      unless system("vagrant box list | grep 'dummy\s*(#{provider})' &>/dev/null")
+        system("vagrant box add dummy https://github.com/mitchellh/vagrant-#{provider}/raw/master/dummy.box")
+      end
     end
 
     Dir["test/acceptance/*"].each do |provider_test_dir|
