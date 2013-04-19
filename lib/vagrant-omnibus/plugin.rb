@@ -54,6 +54,10 @@ module VagrantPlugins
         end
 
         if VagrantPlugins.const_defined?("Rackspace")
+          # The `VagrantPlugins::Rackspace` module is missing the autoload for
+          # `VagrantPlugins::Rackspace::Action` so we need to ensure it is
+          # loaded before accessing the module in the after hook below.
+          require 'vagrant-rackspace/action'
           hook.after(VagrantPlugins::Rackspace::Action::CreateServer, Action.install_chef)
         end
 

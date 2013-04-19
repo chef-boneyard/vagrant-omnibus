@@ -12,6 +12,7 @@ BUG FIXES:
 * convert `Gem::Version` returned by `#retrieve_latest_chef_version` to a
   string. fixes [GH-2] for realz.
 * RubyGems 2.0 compat: use #empty? to check for results. fixes [GH-6]
+* Ensure 'vagrant-rackspace/action' is loaded. fixes [GH-7]
 
 ## 1.0.1 (April 17, 2013)
 
