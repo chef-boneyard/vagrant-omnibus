@@ -17,24 +17,25 @@
 module VagrantPlugins
   module Omnibus
     module Action
-      # @author Mitchell Hashimoto <mitchell.hashimoto@gmail.com>
       # @author Seth Chisamore <schisamo@opscode.com>
       #
-      # This action checks if the machine is up and running.
+      # This action checks if the machine is running (virtualbox) or active
+      # (aws, rackspace).
       #
-      # This is a direct copy of
-      # `VagrantPlugins::ProviderVirtualBox::Action::IsRunning` that is part of
-      # the VirtualBox provider that ships in core Vagrant.
-      #
-      # @todo find out why this isn't part of `Vagrant::Action::Builtin`
-      class IsRunning
+      class IsRunningOrActive
         def initialize(app, env)
           @app = app
         end
 
         def call(env)
-          # Set the result to be true if the machine is running.
-          env[:result] = env[:machine].state.id == :running
+          # Set the result to be true if the machine is :running or :active.
+          if (env[:machine].state.id == :running) ||
+             (env[:machine].state.id == :active)
+
+            env[:result] = true
+          else
+            env[:result] = false
+          end
 
           # Call the next if we have one (but we shouldn't, since this
           # middleware is built to run with the Call-type middlewares)
