@@ -4,6 +4,8 @@ IMPROVEMENTS:
 
 * unit test coverage for `VagrantPlugins::Omnibus::Config`
 * Add Rackspace provider acceptance test.
+* Parameterize the acceptance test Rake task, this allows you test run
+  acceptance tests against a single provider.
 
 BUG FIXES:
 

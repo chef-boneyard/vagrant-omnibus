@@ -12,7 +12,7 @@ namespace :test do
   end
 
   desc "Run acceptance tests..these actually launch Vagrant sessions."
-  task :acceptance do
+  task :acceptance, :provider do |t, args|
 
     # ensure all required dummy boxen are installed
     %w{ aws rackspace }.each do |provider|
@@ -21,10 +21,17 @@ namespace :test do
       end
     end
 
-    Dir["test/acceptance/*"].each do |provider_test_dir|
+    all_providers = Dir["test/acceptance/*"].map{|dir| File.basename(File.expand_path(dir))}
 
-      provider = File.basename(File.expand_path(provider_test_dir))
+    # If a provider wasn't passed to the task run acceptance tests against
+    # ALL THE PROVIDERS!
+    providers = if args[:provider] && all_providers.include?(args[:provider])
+                  [args[:provider]]
+                else
+                  all_providers
+                end
 
+    providers.each do |provider|
       puts "=================================================================="
       puts "Running acceptance tests against '#{provider}' provider..."
       puts "=================================================================="
