@@ -1,4 +1,4 @@
-## 1.0.2 (unreleased)
+## 1.0.2 (April 20, 2013)
 
 IMPROVEMENTS:
 
