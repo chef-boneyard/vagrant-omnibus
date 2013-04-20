@@ -10,7 +10,7 @@ group :development do
 end
 
 group :test do
-  gem "vagrant-aws", "~> 0.2.1"
+  gem "vagrant-aws", "~> 0.2.2"
   gem "vagrant-rackspace", "~> 0.1.1"
 end
 
