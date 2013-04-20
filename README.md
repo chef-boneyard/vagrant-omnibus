@@ -9,6 +9,16 @@ A Vagrant plugin that ensures the desired version of Chef is installed via the
 platform-specific Omnibus packages. This proves very useful when using Vagrant
 with provisioner-less baseboxes OR cloud images.
 
+This plugin has been verified to work with the following
+[Vagrant providers](http://docs.vagrantup.com/v2/providers/index.html):
+
+* VirtualBox (part of core)
+* AWS (ships in [vagrant-aws](https://github.com/mitchellh/vagrant-aws) plugin)
+* Rackspace (ships in [vagrant-rackspace](https://github.com/mitchellh/vagrant-rackspace)
+  plugin)
+
+It may work with other Vagrant providers but is not guaranteed to!
+
 ## Installation
 
 Ensure you have downloaded and installed Vagrant 1.1.x from the
@@ -55,7 +65,13 @@ end
 
 ### Unit
 
-Coming soon!
+The unit tests can be run with:
+
+```
+rake test:unit
+```
+
+The test are also executed by Travis CI every time code is pushed to GitHub.
 
 ### Acceptance
 
@@ -65,12 +81,8 @@ Currently this repo ships with a set of basic acceptance tests that will:
 * Attempt to install Chef 11.4.0 using this plugin.
 * Perform a very basic chef-solo run to ensure Chef is in fact installed.
 
-The acceptance tests are run with the following Vagrant providers:
-
-* VirtualBox (part of core)
-* AWS (ships in [vagrant-aws](https://github.com/mitchellh/vagrant-aws) plugin)
-
-The acceptance tests can be run with:
+The acceptance tests are run against the Vagrant providers mentioned above. The
+acceptance tests can be run with:
 
 ```
 rake test:acceptance
