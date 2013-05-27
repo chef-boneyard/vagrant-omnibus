@@ -47,6 +47,10 @@ module VagrantPlugins
         # fire after anything boot related which wedges in right before the
         # actual real run of the provisioner.
 
+        if HashiCorp.const_defined?("VagrantVMwarefusion")
+          hook.after(HashiCorp::VagrantVMwarefusion::Action::Boot, Action.install_chef)
+        end
+        
         hook.after(VagrantPlugins::ProviderVirtualBox::Action::Boot, Action.install_chef)
 
         if VagrantPlugins.const_defined?("AWS")
