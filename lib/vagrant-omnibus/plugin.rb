@@ -47,7 +47,7 @@ module VagrantPlugins
         # fire after anything boot related which wedges in right before the
         # actual real run of the provisioner.
 
-        if HashiCorp.const_defined?("VagrantVMwarefusion")
+        if defined?(HashiCorp) && HashiCorp.const_defined?("VagrantVMwarefusion")
           hook.after(HashiCorp::VagrantVMwarefusion::Action::Boot, Action.install_chef)
         end
         
