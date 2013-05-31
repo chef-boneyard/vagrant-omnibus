@@ -65,6 +65,10 @@ module VagrantPlugins
           hook.after(VagrantPlugins::Rackspace::Action::CreateServer, Action.install_chef)
         end
 
+        if Vagrant.const_defined?("LXC")
+          hook.after(Vagrant::LXC::Action::Boot, Action.install_chef)
+        end
+
         # END workaround
       end
 
