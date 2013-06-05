@@ -1,3 +1,10 @@
+## 1.0.3 (June 05, 2013)
+
+IMPROVEMENTS:
+
+* get & set proxy environment from hostmachine
+* change protocol git to https (gem vagrant)
+
 ## 1.0.2 (April 20, 2013)
 
 IMPROVEMENTS:
