@@ -12,6 +12,7 @@ end
 group :test do
   gem "vagrant-aws", "~> 0.2.2"
   gem "vagrant-rackspace", "~> 0.1.1"
+  gem "vagrant-digitalocean", "~> 0.2.0"
 end
 
 group :docs do

@@ -1,0 +1,23 @@
+Vagrant.require_plugin('vagrant-omnibus')
+Vagrant.require_plugin('vagrant-digitalocean')
+
+Vagrant.configure('2') do |config|
+  config.omnibus.chef_version = '11.4.0'
+
+  config.vm.box = 'digital_ocean'
+  config.vm.synced_folder '.', '/vagrant', :disabled => true
+
+  config.vm.provider :digital_ocean do |provider, override|
+    provider.client_id = ENV['DO_CLIENT_ID']
+    provider.api_key = ENV['DO_API_KEY']
+    provider.region = 'New York 1'
+    provider.size = '512MB'
+    provider.image = 'Ubuntu 12.04 x64 Server'
+    override.ssh.private_key_path = '~/.ssh/id_rsa'
+  end
+
+  config.vm.provision :chef_solo do |chef|
+    chef.cookbooks_path = File.expand_path("../../../support/cookbooks", __FILE__)
+    chef.add_recipe "chef-inator"
+  end
+end
