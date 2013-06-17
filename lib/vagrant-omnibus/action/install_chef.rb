@@ -22,7 +22,7 @@ module VagrantPlugins
       # This action installs Chef Omnibus packages at the desired version.
       class InstallChef
 
-        INSTALL_SH = "https://www.opscode.com/chef/install.sh".freeze
+        INSTALL_SH = "#{ENV['OMNIBUS_INSTALL_URL'] || 'https://www.opscode.com/chef/install.sh'}"
 
         def initialize(app, env)
           @app = app
