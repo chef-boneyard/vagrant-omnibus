@@ -72,8 +72,7 @@ module VagrantPlugins
         # END workaround
       end
 
-      action_hook(:install_chef, :machine_action_up, &method(:provision))
-      action_hook(:install_chef, :machine_action_provision, &method(:provision))
+      action_hook(:install_chef, Plugin::ALL_ACTIONS, &method(:provision))
 
       config(:omnibus) do
         require_relative "config"

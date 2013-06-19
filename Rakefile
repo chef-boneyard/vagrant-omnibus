@@ -19,6 +19,10 @@ namespace :test do
       unless system("vagrant box list | grep 'dummy\s*(#{provider})' &>/dev/null")
         system("vagrant box add dummy https://github.com/mitchellh/vagrant-#{provider}/raw/master/dummy.box")
       end
+
+      unless system("vagrant box list | grep 'digital_ocean' &>/dev/null")
+        sytem("vagrant box add digital_ocean https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box")
+      end
     end
 
     all_providers = Dir["test/acceptance/*"].map{|dir| File.basename(File.expand_path(dir))}
