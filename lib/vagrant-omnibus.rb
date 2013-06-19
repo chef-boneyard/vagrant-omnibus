@@ -14,7 +14,9 @@
 # limitations under the License.
 #
 
-require "vagrant-omnibus/plugin"
+require 'vagrant'
+require 'vagrant-omnibus/plugin'
+require 'vagrant-omnibus/config'
 
 module VagrantPlugins
   module Omnibus
