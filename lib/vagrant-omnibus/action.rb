@@ -14,30 +14,15 @@
 # limitations under the License.
 #
 
-require "vagrant/action/builder"
+require "vagrant-omnibus/action/install_chef"
 
 module VagrantPlugins
   module Omnibus
     module Action
-      autoload :InstallChef, File.expand_path("../action/install_chef", __FILE__)
-      autoload :IsRunningOrActive, File.expand_path("../action/is_running_or_active", __FILE__)
-      autoload :ReadChefVersion, File.expand_path("../action/read_chef_version", __FILE__)
-
-      # Include the built-in modules so that we can use them as top-level
-      # things.
-      include Vagrant::Action::Builtin
-
-      # @return [::Vagrant::Action::Builder]
       def self.install_chef
         @install_chef ||= ::Vagrant::Action::Builder.new.tap do |b|
-          b.use ConfigValidate
-          b.use Call, IsRunningOrActive do |env1, b2|
-            if env1[:result]
-              b2.use ReadChefVersion
-              b2.use InstallChef
-              b2.use SSHRun
-            end
-          end
+          b.use ::Vagrant::Action::Builtin::ConfigValidate
+          b.use InstallChef
         end
       end
     end
