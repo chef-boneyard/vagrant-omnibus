@@ -1,0 +1,5 @@
+en:
+  vagrant-omnibus:
+    action:
+      installed: "Chef %{version} Omnibus package is already installed."
+      installing: "Installing Chef %{version} Omnibus package..."
