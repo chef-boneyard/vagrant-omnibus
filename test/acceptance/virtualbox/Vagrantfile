@@ -5,13 +5,28 @@
 require 'vagrant-omnibus'
 
 Vagrant.configure("2") do |config|
-  config.omnibus.chef_version = :latest
 
-  config.vm.box = "canonical-ubuntu-12.04"
-  config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
+  config.vm.define :new_chef do |new_chef_config|
+    new_chef_config.vm.box = "canonical-ubuntu-12.04"
+    new_chef_config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
 
-  config.vm.provision :chef_solo do |chef|
-    chef.cookbooks_path = File.expand_path("../../../support/cookbooks", __FILE__)
-    chef.add_recipe "chef-inator"
+    new_chef_config.omnibus.chef_version = :latest
+
+    new_chef_config.vm.provision :chef_solo do |chef|
+      chef.cookbooks_path = File.expand_path("../../../support/cookbooks", __FILE__)
+      chef.add_recipe "chef-inator"
+    end
+  end
+
+  config.vm.define :old_chef do |old_chef_config|
+    old_chef_config.vm.box = "opscode-centos-6.4"
+    old_chef_config.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box"
+
+    old_chef_config.omnibus.chef_version = "10.24.0"
+
+    old_chef_config.vm.provision :chef_solo do |chef|
+      chef.cookbooks_path = File.expand_path("../../../support/cookbooks", __FILE__)
+      chef.add_recipe "chef-inator"
+    end
   end
 end

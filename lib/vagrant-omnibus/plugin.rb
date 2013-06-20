@@ -14,12 +14,6 @@
 # limitations under the License.
 #
 
-begin
-  require "vagrant"
-rescue LoadError
-  raise "The Vagrant Omnibus plugin must be run within Vagrant."
-end
-
 # This is a sanity check to make sure no one is attempting to install
 # this into an early Vagrant version.
 if Vagrant::VERSION < "1.1.0"
@@ -36,44 +30,19 @@ module VagrantPlugins
       via the platform-specific Omnibus packages.
       DESC
 
-      def self.provision(hook)
-
+      action_hook(:install_chef, Plugin::ALL_ACTIONS) do |hook|
+        require_relative "action"
         hook.after(Vagrant::Action::Builtin::Provision, Action.install_chef)
 
-        # BEGIN workaround
+        # The AWS provider uses a non-standard Provision action on initial
+        # creation:
         #
-        # Currently hooks attached to {Vagrant::Action::Builtin::Provision} are
-        # not wired into the middleware return path. My current workaround is to
-        # fire after anything boot related which wedges in right before the
-        # actual real run of the provisioner.
-
-        if defined?(HashiCorp) && HashiCorp.const_defined?("VagrantVMwarefusion")
-          hook.after(HashiCorp::VagrantVMwarefusion::Action::Boot, Action.install_chef)
-        end
-        
-        hook.after(VagrantPlugins::ProviderVirtualBox::Action::Boot, Action.install_chef)
-
+        # https://github.com/mitchellh/vagrant-aws/blob/master/lib/vagrant-aws/action.rb#L105
+        #
         if VagrantPlugins.const_defined?("AWS")
-          hook.after(VagrantPlugins::AWS::Action::RunInstance, Action.install_chef)
+          hook.after(VagrantPlugins::AWS::Action::TimedProvision, Action.install_chef)
         end
-
-        if VagrantPlugins.const_defined?("Rackspace")
-          # The `VagrantPlugins::Rackspace` module is missing the autoload for
-          # `VagrantPlugins::Rackspace::Action` so we need to ensure it is
-          # loaded before accessing the module in the after hook below.
-          require 'vagrant-rackspace/action'
-          hook.after(VagrantPlugins::Rackspace::Action::CreateServer, Action.install_chef)
-        end
-
-        if defined?(Vagrant::LXC::Action)
-          hook.after(Vagrant::LXC::Action::Boot, Action.install_chef)
-        end
-
-        # END workaround
       end
-
-      action_hook(:install_chef, :machine_action_up, &method(:provision))
-      action_hook(:install_chef, :machine_action_provision, &method(:provision))
 
       config(:omnibus) do
         require_relative "config"
