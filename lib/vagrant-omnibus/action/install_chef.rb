@@ -27,6 +27,8 @@ module VagrantPlugins
         def initialize(app, env)
           @app = app
           @machine = env[:machine]
+          # Config#finalize! SHOULD be called automatically
+          @machine.config.omnibus.finalize!
         end
 
         def call(env)
