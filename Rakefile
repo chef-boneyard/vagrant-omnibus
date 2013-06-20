@@ -22,7 +22,7 @@ namespace :test do
     end
 
     unless system("vagrant box list | grep 'digital_ocean' &>/dev/null")
-      sytem("vagrant box add digital_ocean https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box")
+      system("vagrant box add digital_ocean https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box")
     end
 
     all_providers = Dir["test/acceptance/*"].map{|dir| File.basename(File.expand_path(dir))}
