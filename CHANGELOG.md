@@ -1,3 +1,11 @@
+## 1.1.0 (June 21, 2013)
+
+FEATURES:
+
+* PR [#23][], Issues [#17][], [#19][], [#21][], [#23][]: Support for all Vagrant providers that hook into `Vagrant::Action::Builtin::Provision` for provisioning. ([@smdahlen][], [@michfield][], [@rjocoleman][])
+* Issue [#15][]: Multi-VM Vagrantfiles are now fully supported. A global `omnibus.chef_version` will install the same version of Chef on all VMs OR declare a separate Chef version in the config block for each individual VM! ([@smdahlen][], [@schisamo][])
+* PR [#10][]: Optionally change the location of `install.sh` via the `OMNIBUS_INSTALL_URL` environment variable. Default is still https://www.opscode.com/chef/install.sh. , ([@petecheslock][])
+
 ## 1.0.2 (April 20, 2013)
 
 IMPROVEMENTS:
@@ -37,4 +45,14 @@ BUG FIXES:
 [#6]: https://github.com/schisamo/vagrant/issues/6
 [#7]: https://github.com/schisamo/vagrant/issues/7
 [#8]: https://github.com/schisamo/vagrant/issues/8
+[#10]: https://github.com/schisamo/vagrant/issues/10
+[#15]: https://github.com/schisamo/vagrant/issues/15
+[#17]: https://github.com/schisamo/vagrant/issues/17
+[#19]: https://github.com/schisamo/vagrant/issues/19
+[#21]: https://github.com/schisamo/vagrant/issues/21
+[#23]: https://github.com/schisamo/vagrant/issues/23
+[@michfield]: https://github.com/michfield
+[@petecheslock]: https://github.com/petecheslock
+[@rjocoleman]: https://github.com/rjocoleman
 [@schisamo]: https://github.com/schisamo
+[@smdahlen]: https://github.com/smdahlen
