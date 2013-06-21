@@ -9,15 +9,17 @@ A Vagrant plugin that ensures the desired version of Chef is installed via the
 platform-specific Omnibus packages. This proves very useful when using Vagrant
 with provisioner-less baseboxes OR cloud images.
 
-This plugin has been verified to work with the following
+The plugin should work correctly with most all providers that hook into 
+`Vagrant::Action::Builtin::Provision` for provisioning and is 
+known to work with the following 
 [Vagrant providers](http://docs.vagrantup.com/v2/providers/index.html):
 
 * VirtualBox (part of core)
 * AWS (ships in [vagrant-aws](https://github.com/mitchellh/vagrant-aws) plugin)
 * Rackspace (ships in [vagrant-rackspace](https://github.com/mitchellh/vagrant-rackspace)
   plugin)
-
-It may work with other Vagrant providers but is not guaranteed to!
+* VMWare Fusion (can be [purchased from Hashicorp](http://www.vagrantup.com/vmware))
+* LXC (ships in [vagrant-lxc](https://github.com/fgrehm/vagrant-lxc))
 
 ## Installation
 
@@ -59,6 +61,35 @@ Vagrant.configure("2") do |config|
   ...
 
 end
+```
+
+This plugin is also multi-vm aware so it would possible to say install a 
+different version of Chef on each VM:
+
+```ruby
+Vagrant.configure("2") do |config|
+
+  config.vm.define :new_chef do |new_chef_config|
+
+    ...
+
+    new_chef_config.omnibus.chef_version = :latest
+
+    ...
+
+  end
+
+  config.vm.define :old_chef do |old_chef_config|
+
+    ...
+
+    old_chef_config.omnibus.chef_version = "10.24.0"
+
+    ...
+
+  end
+end
+
 ```
 
 ## Tests
