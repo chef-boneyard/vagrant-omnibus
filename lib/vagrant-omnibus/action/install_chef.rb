@@ -63,11 +63,22 @@ module VagrantPlugins
         end
 
         def install(version)
+          if ENV["http_proxy"]
+            http_proxy = "export http_proxy=" + ENV["http_proxy"]
+            https_proxy = "export https_proxy=" + ENV["https_proxy"]
+            if ENV["no_proxy"]
+              no_proxy = "export no_proxy=" + ENV["no_proxy"]
+            end
+          end
+
           command = <<-INSTALL_OMNIBUS
+            #{http_proxy}
+            #{https_proxy}
+            #{no_proxy}
             if command -v wget &>/dev/null; then
-              wget -qO- #{INSTALL_SH} | sudo bash -s -- -v #{version}
+              wget -qO- #{INSTALL_SH} | sudo bash -E -s -- -v #{version}
             elif command -v curl &>/dev/null; then
-              curl -L #{INSTALL_SH} -v #{version} | sudo bash
+              curl -L #{INSTALL_SH} -v #{version} | sudo -E bash
             else
               echo "Neither wget nor curl found. Please install one." >&2
               exit 1
