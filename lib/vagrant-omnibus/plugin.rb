@@ -32,7 +32,8 @@ module VagrantPlugins
 
       action_hook(:install_chef, Plugin::ALL_ACTIONS) do |hook|
         require_relative "action"
-        hook.after(Vagrant::Action::Builtin::Provision, Action.install_chef)
+
+        hook.before(Vagrant::Action::Builtin::Provision, Action.install_chef)
 
         # The AWS provider uses a non-standard Provision action on initial
         # creation:
@@ -40,7 +41,7 @@ module VagrantPlugins
         # https://github.com/mitchellh/vagrant-aws/blob/master/lib/vagrant-aws/action.rb#L105
         #
         if VagrantPlugins.const_defined?("AWS")
-          hook.after(VagrantPlugins::AWS::Action::TimedProvision, Action.install_chef)
+          hook.before(VagrantPlugins::AWS::Action::TimedProvision, Action.install_chef)
         end
       end
 
