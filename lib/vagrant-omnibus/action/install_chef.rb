@@ -67,7 +67,7 @@ module VagrantPlugins
             if command -v wget &>/dev/null; then
               wget -qO- #{INSTALL_SH} | bash -s -- -v #{version}
             elif command -v curl &>/dev/null; then
-              curl -L #{INSTALL_SH} -v #{version} | bash
+              curl -L #{INSTALL_SH} | bash -s -- -v #{version}
             else
               echo "Neither wget nor curl found. Please install one." >&2
               exit 1
