@@ -65,9 +65,9 @@ module VagrantPlugins
         def install(version)
           command = <<-INSTALL_OMNIBUS
             if command -v wget &>/dev/null; then
-              wget -qO- #{INSTALL_SH} | sudo bash -s -- -v #{version}
+              wget -qO- #{INSTALL_SH} | bash -s -- -v #{version}
             elif command -v curl &>/dev/null; then
-              curl -L #{INSTALL_SH} -v #{version} | sudo bash
+              curl -L #{INSTALL_SH} | bash -s -- -v #{version}
             else
               echo "Neither wget nor curl found. Please install one." >&2
               exit 1
