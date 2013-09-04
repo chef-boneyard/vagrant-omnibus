@@ -6,13 +6,13 @@ group :development do
   # We depend on Vagrant for development, but we don't add it as a
   # gem dependency because we expect to be installed within the
   # Vagrant environment itself using `vagrant plugin`.
-  gem "vagrant", :git => "git://github.com/mitchellh/vagrant.git", :tag => "v1.2.1"
+  gem "vagrant", :git => "git://github.com/mitchellh/vagrant.git", :tag => "v1.2.7"
 end
 
 group :test do
-  gem "vagrant-digitalocean", "~> 0.2.0"
-  gem "vagrant-aws", "~> 0.2.2"
-  gem "vagrant-rackspace", "~> 0.1.1"
+  gem "vagrant-digitalocean", "~> 0.3.0"
+  gem "vagrant-aws", "~> 0.3.0"
+  gem "vagrant-rackspace", "~> 0.1.2"
 end
 
 group :docs do
