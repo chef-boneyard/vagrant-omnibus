@@ -6,7 +6,7 @@ require 'vagrant-omnibus'
 require 'vagrant-aws'
 
 Vagrant.configure("2") do |config|
-  config.omnibus.chef_version = '11.4.0'
+  config.omnibus.chef_version = "11.4.0"
 
   config.vm.box = "dummy"
   config.vm.provider :aws do |aws, override|

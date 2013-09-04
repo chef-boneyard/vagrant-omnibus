@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+require 'shellwords'
+
 module VagrantPlugins
   module Omnibus
     module Action
@@ -63,11 +65,12 @@ module VagrantPlugins
         end
 
         def install(version)
+          shell_escaped_version = Shellwords.escape(version)
           command = <<-INSTALL_OMNIBUS
             if command -v wget &>/dev/null; then
-              wget -qO- #{INSTALL_SH} | bash -s -- -v #{version}
+              wget -qO- #{INSTALL_SH} | bash -s -- -v #{shell_escaped_version}
             elif command -v curl &>/dev/null; then
-              curl -L #{INSTALL_SH} | bash -s -- -v #{version}
+              curl -L #{INSTALL_SH} | bash -s -- -v #{shell_escaped_version}
             else
               echo "Neither wget nor curl found. Please install one." >&2
               exit 1
