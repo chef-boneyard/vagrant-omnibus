@@ -1,6 +1,6 @@
 # vagrant-omnibus
 
-[![Gem Version](https://badge.fury.io/rb/vagrant-omnibus.png)](https://badge.fury.io/rb/vagrant-omnibus.png)
+[![Gem Version](https://badge.fury.io/rb/vagrant-omnibus.png)](https://rubygems.org/gems/vagrant-omnibus)
 [![Build Status](https://travis-ci.org/schisamo/vagrant-omnibus.png?branch=master)](https://travis-ci.org/schisamo/vagrant-omnibus)
 [![Dependency Status](https://gemnasium.com/schisamo/vagrant-omnibus.png)](https://gemnasium.com/schisamo/vagrant-omnibus)
 [![Code Climate](https://codeclimate.com/github/schisamo/vagrant-omnibus.png)](https://codeclimate.com/github/schisamo/vagrant-omnibus)
@@ -24,7 +24,7 @@ known to work with the following
 
 ## Installation
 
-Ensure you have downloaded and installed Vagrant 1.1.x from the
+Ensure you have downloaded and installed Vagrant 1.1 or newer from the
 [Vagrant downloads page](http://downloads.vagrantup.com/).
 
 Installation is performed in the prescribed manner for Vagrant 1.1 plugins.
