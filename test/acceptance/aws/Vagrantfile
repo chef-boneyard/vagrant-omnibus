@@ -16,7 +16,6 @@ Vagrant.configure("2") do |config|
 
     aws.instance_type = "m1.large"
     aws.ami = "ami-2efa9d47" # Ubuntu 12.04 LTS 64-bit instance root store
-    aws.ssh_username = "ubuntu"
 
     override.ssh.username = "ubuntu"
     override.ssh.private_key_path = "~/.ssh/id_rsa"
