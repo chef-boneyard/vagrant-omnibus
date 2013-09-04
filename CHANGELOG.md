@@ -1,3 +1,14 @@
+## 1.1.1 (September 4, 2013)
+
+BUG FIXES:
+
+* PR [#28][]: Include OpenStack provider into the list of working providers. ([@srenatus][])
+* PR [#32][], Issue [#31][]: No need to do sudo in sudo ([@matsu911][])
+* PR [#32][], Issue [#32][]: Fix the curl line to install the requested Chef version ([@tmatilai][])
+* PR [#37][]: Document that newer than v1.1.x Vagrant is fine, too. ([@tmatilai][])
+* PR [#38][]: Drop unneeded ConfigValidate action call ([@tmatilai][])
+* Issue [#27][]: Properly shell escape version strings ([@schisamo][])
+
 ## 1.1.0 (June 21, 2013)
 
 FEATURES:
@@ -51,12 +62,17 @@ BUG FIXES:
 [#19]: https://github.com/schisamo/vagrant-omnibus/issues/19
 [#21]: https://github.com/schisamo/vagrant-omnibus/issues/21
 [#23]: https://github.com/schisamo/vagrant-omnibus/issues/23
+[#27]: https://github.com/schisamo/vagrant-omnibus/issues/27
 [#28]: https://github.com/schisamo/vagrant-omnibus/issues/28
 [#31]: https://github.com/schisamo/vagrant-omnibus/issues/31
 [#32]: https://github.com/schisamo/vagrant-omnibus/issues/32
 [#37]: https://github.com/schisamo/vagrant-omnibus/issues/37
+[#38]: https://github.com/schisamo/vagrant-omnibus/issues/38
+[@matsu911]: https://github.com/matsu911
 [@michfield]: https://github.com/michfield
 [@petecheslock]: https://github.com/petecheslock
 [@rjocoleman]: https://github.com/rjocoleman
 [@schisamo]: https://github.com/schisamo
 [@smdahlen]: https://github.com/smdahlen
+[@srenatus]: https://github.com/srenatus
+[@tmatilai]: https://github.com/tmatilai
