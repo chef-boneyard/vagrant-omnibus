@@ -14,7 +14,10 @@
 # limitations under the License.
 #
 
+require "log4r"
 require 'shellwords'
+
+require "vagrant/util/downloader"
 
 module VagrantPlugins
   module Omnibus
@@ -28,6 +31,7 @@ module VagrantPlugins
 
         def initialize(app, env)
           @app = app
+          @logger = Log4r::Logger.new("vagrantplugins::omnibus::action::installchef")
           @machine = env[:machine]
           # Config#finalize! SHOULD be called automatically
           @machine.config.omnibus.finalize!
@@ -45,10 +49,12 @@ module VagrantPlugins
                 :version => desired_version
               })
             else
+              fetch_install_sh(env)
               env[:ui].info I18n.t('vagrant-omnibus.action.installing', {
                 :version => desired_version
               })
-              install(desired_version)
+              install(desired_version, env)
+              recover(env)
             end
           end
         end
@@ -64,19 +70,65 @@ module VagrantPlugins
           version
         end
 
-        def install(version)
+        # Uploads install.sh from Host's Vagrant TMP directory to guest
+        # and executes.
+        def install(version, env)
           shell_escaped_version = Shellwords.escape(version)
-          command = <<-INSTALL_OMNIBUS
-            if command -v wget &>/dev/null; then
-              wget -qO- #{INSTALL_SH} | bash -s -- -v #{shell_escaped_version}
-            elif command -v curl &>/dev/null; then
-              curl -L #{INSTALL_SH} | bash -s -- -v #{shell_escaped_version}
-            else
-              echo "Neither wget nor curl found. Please install one." >&2
-              exit 1
-            fi
-          INSTALL_OMNIBUS
-          @machine.communicate.sudo(command)
+
+          @machine.communicate.tap do |comm|
+            comm.upload(@install_sh_temp_path, "install.sh")
+            # TODO - Execute with `sh` once install.sh removes it's bash-isms.
+            comm.sudo("bash install.sh -v #{shell_escaped_version} 2>&1") do |type, data|
+              if [:stderr, :stdout].include?(type)
+                next if data =~ /stdin: is not a tty/
+                env[:ui].info(data)
+              end
+            end
+          end
+        end
+
+        # Fetches install.sh file to the Host's Vagrant TMP directory.
+        #
+        # Mostly lifted from:
+        #
+        #   https://github.com/mitchellh/vagrant/blob/master/lib/vagrant/action/builtin/box_add.rb
+        #
+        def fetch_install_sh(env)
+          @install_sh_temp_path = env[:tmp_path].join(Time.now.to_i.to_s + "-install.sh")
+          @logger.info("Downloading install.sh to: #{@install_sh_temp_path}")
+
+          url = INSTALL_SH
+          if File.file?(url) || url !~ /^[a-z0-9]+:.*$/i
+            @logger.info("URL is a file or protocol not found and assuming file.")
+            file_path = File.expand_path(url)
+            file_path = Vagrant::Util::Platform.cygwin_windows_path(file_path)
+            url = "file:#{file_path}"
+          end
+
+          downloader_options = {}
+          # downloader_options[:insecure] = env[:box_download_insecure]
+          # downloader_options[:ui] = env[:ui]
+
+          # Download the install.sh file to a temporary path. We store
+          # the temporary path as an instance variable so that the
+          # `#recover` method can access it.
+          begin
+            downloader = Vagrant::Util::Downloader.new(url,
+                                                       @install_sh_temp_path,
+                                                       downloader_options)
+            downloader.download!
+          rescue Vagrant::Errors::DownloaderInterrupted
+            # The downloader was interrupted, so just return, because that
+            # means we were interrupted as well.
+            env[:ui].info(I18n.t("vagrant-omnibus.download.interrupted"))
+            return
+          end
+        end
+
+        def recover(env)
+          if @install_sh_temp_path && File.exist?(@install_sh_temp_path)
+            File.unlink(@install_sh_temp_path)
+          end
         end
       end
     end
