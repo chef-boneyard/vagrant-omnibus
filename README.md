@@ -21,6 +21,7 @@ known to work with the following
 * VMWare Fusion (can be [purchased from Hashicorp](http://www.vagrantup.com/vmware))
 * LXC (ships in [vagrant-lxc](https://github.com/fgrehm/vagrant-lxc))
 * OpenStack (ships in [vagrant-openstack-plugin](https://github.com/cloudbau/vagrant-openstack-plugin))
+* Digital Ocean (ships in [vagrant-digitalocean](https://github.com/smdahlen/vagrant-digitalocean))
 
 ## Installation
 
