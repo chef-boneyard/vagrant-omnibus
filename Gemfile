@@ -9,10 +9,10 @@ group :development do
   gem "vagrant", :git => "git://github.com/mitchellh/vagrant.git", :tag => "v1.2.7"
 end
 
-group :test do
+group :acceptance do
   gem "vagrant-digitalocean", "~> 0.3.0"
   gem "vagrant-aws", "~> 0.3.0"
-  gem "vagrant-rackspace", "~> 0.1.2"
+  gem "vagrant-rackspace", "= 0.1.2"
 end
 
 group :docs do
