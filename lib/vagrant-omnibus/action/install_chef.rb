@@ -71,6 +71,9 @@ module VagrantPlugins
               wget -qO- #{INSTALL_SH} | bash -s -- -v #{shell_escaped_version}
             elif command -v curl &>/dev/null; then
               curl -L #{INSTALL_SH} | bash -s -- -v #{shell_escaped_version}
+            elif command -v python &>/dev/null; then
+              python -c "import sys,urllib2 ; sys.stdout.write(urllib2.urlopen('#{INSTALL_SH}').read())" \ 
+              | bash -s -- -v #{shell_escaped_version}
             else
               echo "Neither wget nor curl found. Please install one." >&2
               exit 1
