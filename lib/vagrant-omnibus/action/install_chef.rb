@@ -57,7 +57,7 @@ module VagrantPlugins
 
         def installed_version
           version = nil
-          command = 'echo $(chef-solo --v | awk "{print \\$2}" || "")'
+          command = 'echo $(chef-solo --v | awk "{print \$2}" || "")'
           @machine.communicate.sudo(command) do |type, data|
             version = data.chomp if [:stderr, :stdout].include?(type)
           end
