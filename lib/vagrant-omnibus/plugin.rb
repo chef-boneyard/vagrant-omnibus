@@ -34,12 +34,12 @@ module VagrantPlugins
         require_relative "action/install_chef"
         hook.after(Vagrant::Action::Builtin::Provision, Action::InstallChef)
 
-        # The AWS provider uses a non-standard Provision action on initial
+        # The AWS provider < v0.4.0 uses a non-standard Provision action on initial
         # creation:
         #
-        # https://github.com/mitchellh/vagrant-aws/blob/master/lib/vagrant-aws/action.rb#L105
+        # https://github.com/mitchellh/vagrant-aws/blob/v0.3.0/lib/vagrant-aws/action.rb#L105
         #
-        if VagrantPlugins.const_defined?("AWS")
+        if defined? VagrantPlugins::AWS::Action::TimedProvision
           hook.after(VagrantPlugins::AWS::Action::TimedProvision, Action::InstallChef)
         end
       end
