@@ -3,3 +3,6 @@ en:
     action:
       installed: "Chef %{version} Omnibus package is already installed."
       installing: "Installing Chef %{version} Omnibus package..."
+    download:
+      downloading: "Downloading or copying install.sh..."
+      interrupted: "Install.sh download was interrupted. Exiting."
