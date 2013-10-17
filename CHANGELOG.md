@@ -1,3 +1,17 @@
+## 1.1.2 (October 17, 2013)
+
+IMPROVEMENTS:
+
+* PR [#41][]: Add vagrant-digitalocean to the list of supported providers. ([@tmatilai][])
+* PR [#45][]: Compatibility with vagrant-aws v0.4.0 ([@tmatilai][])
+* Use Vagrant's built in `Vagrant::Util::Downloader` class; removes requirement of the
+  guest OS having `wget` or `curl` installed. ([@schisamo][])
+
+BUG FIXES:
+
+* PR [#43][]: Fix development dependencies and Travis tests. ([@tmatilai][])
+* Issue [#33][] Split fetching of `install.sh` from the actual execution ([@schisamo][])
+
 ## 1.1.1 (September 4, 2013)
 
 BUG FIXES:
@@ -66,8 +80,12 @@ BUG FIXES:
 [#28]: https://github.com/schisamo/vagrant-omnibus/issues/28
 [#31]: https://github.com/schisamo/vagrant-omnibus/issues/31
 [#32]: https://github.com/schisamo/vagrant-omnibus/issues/32
+[#33]: https://github.com/schisamo/vagrant-omnibus/issues/33
 [#37]: https://github.com/schisamo/vagrant-omnibus/issues/37
 [#38]: https://github.com/schisamo/vagrant-omnibus/issues/38
+[#41]: https://github.com/schisamo/vagrant-omnibus/issues/41
+[#43]: https://github.com/schisamo/vagrant-omnibus/issues/43
+[#45]: https://github.com/schisamo/vagrant-omnibus/issues/45
 [@matsu911]: https://github.com/matsu911
 [@michfield]: https://github.com/michfield
 [@petecheslock]: https://github.com/petecheslock
