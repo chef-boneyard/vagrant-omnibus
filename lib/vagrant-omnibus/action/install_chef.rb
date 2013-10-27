@@ -40,7 +40,7 @@ module VagrantPlugins
         def call(env)
           @app.call(env)
 
-          return unless @machine.communicate.ready?
+          return if !@machine.communicate.ready? || !provision_enabled?(env)
 
           desired_version = @machine.config.omnibus.chef_version
           unless desired_version.nil?
@@ -60,6 +60,10 @@ module VagrantPlugins
         end
 
         private
+
+        def provision_enabled?(env)
+          env.fetch(:provision_enabled, true)
+        end
 
         def installed_version
           version = nil
