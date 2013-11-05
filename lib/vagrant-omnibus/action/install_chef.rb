@@ -40,7 +40,9 @@ module VagrantPlugins
         def call(env)
           @app.call(env)
 
-          return if !@machine.communicate.ready? || !provision_enabled?(env)
+          return if !@machine.communicate.ready? ||
+                    !provision_enabled?(env) ||
+                    windows_guest?(env)
 
           desired_version = @machine.config.omnibus.chef_version
           unless desired_version.nil?
@@ -60,6 +62,10 @@ module VagrantPlugins
         end
 
         private
+
+        def windows_guest?(env)
+          env[:machine].config.vm.guest.eql?(:windows)
+        end
 
         def provision_enabled?(env)
           env.fetch(:provision_enabled, true)
