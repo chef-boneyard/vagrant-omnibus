@@ -22,6 +22,7 @@ known to work with the following
 * LXC (ships in [vagrant-lxc](https://github.com/fgrehm/vagrant-lxc))
 * OpenStack (ships in [vagrant-openstack-plugin](https://github.com/cloudbau/vagrant-openstack-plugin))
 * Digital Ocean (ships in [vagrant-digitalocean](https://github.com/smdahlen/vagrant-digitalocean))
+* Parallels Desktop (ships in [vagrant-parallels](https://github.com/yshahin/vagrant-parallels))
 
 ## Installation
 
