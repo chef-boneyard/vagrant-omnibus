@@ -24,7 +24,7 @@ module VagrantPlugins
   module Omnibus
     # @author Seth Chisamore <schisamo@opscode.com>
     class Plugin < Vagrant.plugin("2")
-      name "Omnibus"
+      name "vagrant-omnibus"
       description <<-DESC
       This plugin ensures the desired version of Chef is installed
       via the platform-specific Omnibus packages.
