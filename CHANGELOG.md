@@ -8,6 +8,7 @@ IMPROVEMENTS:
 
 * PR [#48][]: Don't install Chef if `--no-provision` is specified. ([@tmatilai][])
 * PR [#50][]: Update README.md with vagrant-parallels compatibility. ([@wizonesolutions][])
+* PR [#56][]: Add Rubocop support.
 
 BUG FIXES:
 
@@ -108,6 +109,7 @@ BUG FIXES:
 [#50]: https://github.com/schisamo/vagrant-omnibus/issues/50
 [#52]: https://github.com/schisamo/vagrant-omnibus/issues/52
 [#53]: https://github.com/schisamo/vagrant-omnibus/issues/53
+[#56]: https://github.com/schisamo/vagrant-omnibus/issues/56
 [@comutt]: https://github.com/comutt
 [@matsu911]: https://github.com/matsu911
 [@michfield]: https://github.com/michfield
