@@ -1,0 +1,8 @@
+AllCops:
+  Excludes:
+    - vendor/**
+    - bin/**
+Encoding:
+  Enabled: false
+MethodLength:
+  Max: 30
