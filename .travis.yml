@@ -2,4 +2,7 @@ language: ruby
 bundler_args: --without=acceptance
 rvm:
   - 1.9.3
-script: rake test:unit
+  - 2.0.0
+script:
+  - rake test:unit
+  - rake rubocop
