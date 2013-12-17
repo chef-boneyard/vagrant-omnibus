@@ -16,36 +16,38 @@
 
 # This is a sanity check to make sure no one is attempting to install
 # this into an early Vagrant version.
-if Vagrant::VERSION < "1.1.0"
-  raise "The Vagrant Omnibus plugin is only compatible with Vagrant 1.1+"
+if Vagrant::VERSION < '1.1.0'
+  fail 'The Vagrant Omnibus plugin is only compatible with Vagrant 1.1+'
 end
 
 module VagrantPlugins
+  #
   module Omnibus
     # @author Seth Chisamore <schisamo@opscode.com>
-    class Plugin < Vagrant.plugin("2")
-      name "vagrant-omnibus"
+    class Plugin < Vagrant.plugin('2')
+      name 'vagrant-omnibus'
       description <<-DESC
       This plugin ensures the desired version of Chef is installed
       via the platform-specific Omnibus packages.
       DESC
 
       action_hook(:install_chef, Plugin::ALL_ACTIONS) do |hook|
-        require_relative "action/install_chef"
+        require_relative 'action/install_chef'
         hook.after(Vagrant::Action::Builtin::Provision, Action::InstallChef)
 
-        # The AWS provider < v0.4.0 uses a non-standard Provision action on initial
-        # creation:
+        # The AWS provider < v0.4.0 uses a non-standard Provision action
+        # on initial creation:
         #
-        # https://github.com/mitchellh/vagrant-aws/blob/v0.3.0/lib/vagrant-aws/action.rb#L105
+        # mitchellh/vagrant-aws/blob/v0.3.0/lib/vagrant-aws/action.rb#L105
         #
         if defined? VagrantPlugins::AWS::Action::TimedProvision
-          hook.after(VagrantPlugins::AWS::Action::TimedProvision, Action::InstallChef)
+          hook.after(VagrantPlugins::AWS::Action::TimedProvision,
+                     Action::InstallChef)
         end
       end
 
       config(:omnibus) do
-        require_relative "config"
+        require_relative 'config'
         Config
       end
     end

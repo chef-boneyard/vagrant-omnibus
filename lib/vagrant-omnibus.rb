@@ -19,6 +19,7 @@ require 'vagrant-omnibus/plugin'
 require 'vagrant-omnibus/config'
 
 module VagrantPlugins
+  #
   module Omnibus
     def self.source_root
       @source_root ||= Pathname.new(File.expand_path('../../', __FILE__))

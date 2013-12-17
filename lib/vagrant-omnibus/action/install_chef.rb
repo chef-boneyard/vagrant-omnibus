@@ -14,10 +14,10 @@
 # limitations under the License.
 #
 
-require "log4r"
+require 'log4r'
 require 'shellwords'
 
-require "vagrant/util/downloader"
+require 'vagrant/util/downloader'
 
 module VagrantPlugins
   module Omnibus
@@ -26,12 +26,13 @@ module VagrantPlugins
       #
       # This action installs Chef Omnibus packages at the desired version.
       class InstallChef
-
-        INSTALL_SH = "#{ENV['OMNIBUS_INSTALL_URL'] || 'https://www.opscode.com/chef/install.sh'}"
+        INSTALL_SH = "#{ENV['OMNIBUS_INSTALL_URL'] ||
+          'https://www.opscode.com/chef/install.sh'}"
 
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrantplugins::omnibus::action::installchef")
+          @logger =
+            Log4r::Logger.new('vagrantplugins::omnibus::action::installchef')
           @machine = env[:machine]
           # Config#finalize! SHOULD be called automatically
           @machine.config.omnibus.finalize!
@@ -47,14 +48,16 @@ module VagrantPlugins
           desired_version = @machine.config.omnibus.chef_version
           unless desired_version.nil?
             if installed_version == desired_version
-              env[:ui].info I18n.t('vagrant-omnibus.action.installed', {
-                :version => desired_version
-              })
+              env[:ui].info I18n.t(
+                'vagrant-omnibus.action.installed',
+                version: desired_version
+              )
             else
               fetch_install_sh(env)
-              env[:ui].info I18n.t('vagrant-omnibus.action.installing', {
-                :version => desired_version
-              })
+              env[:ui].info I18n.t(
+                'vagrant-omnibus.action.installing',
+                version: desired_version
+              )
               install(desired_version, env)
               recover(env)
             end
@@ -76,7 +79,7 @@ module VagrantPlugins
           command = 'echo $(chef-solo -v)'
           @machine.communicate.sudo(command) do |type, data|
             v = data.chomp if [:stderr, :stdout].include?(type)
-            version ||= v.split()[1] if not v.empty?
+            version ||= v.split[1] unless v.empty?
           end
           version
         end
@@ -87,9 +90,10 @@ module VagrantPlugins
           shell_escaped_version = Shellwords.escape(version)
 
           @machine.communicate.tap do |comm|
-            comm.upload(@install_sh_temp_path, "install.sh")
-            # TODO - Execute with `sh` once install.sh removes it's bash-isms.
-            comm.sudo("bash install.sh -v #{shell_escaped_version} 2>&1") do |type, data|
+            comm.upload(@install_sh_temp_path, 'install.sh')
+            # TODO: Execute with `sh` once install.sh removes it's bash-isms.
+            install_cmd = "bash install.sh -v #{shell_escaped_version} 2>&1"
+            comm.sudo(install_cmd) do |type, data|
               if [:stderr, :stdout].include?(type)
                 next if data =~ /stdin: is not a tty/
                 env[:ui].info(data)
@@ -102,15 +106,16 @@ module VagrantPlugins
         #
         # Mostly lifted from:
         #
-        #   https://github.com/mitchellh/vagrant/blob/master/lib/vagrant/action/builtin/box_add.rb
+        #   mitchellh/vagrant/blob/master/lib/vagrant/action/builtin/box_add.rb
         #
         def fetch_install_sh(env)
-          @install_sh_temp_path = env[:tmp_path].join(Time.now.to_i.to_s + "-install.sh")
+          @install_sh_temp_path =
+            env[:tmp_path].join(Time.now.to_i.to_s + '-install.sh')
           @logger.info("Downloading install.sh to: #{@install_sh_temp_path}")
 
           url = INSTALL_SH
           if File.file?(url) || url !~ /^[a-z0-9]+:.*$/i
-            @logger.info("URL is a file or protocol not found and assuming file.")
+            @logger.info('Assuming URL is a file.')
             file_path = File.expand_path(url)
             file_path = Vagrant::Util::Platform.cygwin_windows_path(file_path)
             url = "file:#{file_path}"
@@ -131,7 +136,7 @@ module VagrantPlugins
           rescue Vagrant::Errors::DownloaderInterrupted
             # The downloader was interrupted, so just return, because that
             # means we were interrupted as well.
-            env[:ui].info(I18n.t("vagrant-omnibus.download.interrupted"))
+            env[:ui].info(I18n.t('vagrant-omnibus.download.interrupted'))
             return
           end
         end
