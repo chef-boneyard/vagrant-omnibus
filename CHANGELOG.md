@@ -2,7 +2,7 @@
 
 IMPROVEMENTS:
 
-* Acceptance test coverage that verifies Chef is not reinstalled into a system where the desired version of Chef already exists.
+* Acceptance test coverage that verifies Chef is not reinstalled into a system where the desired version of Chef already exists. ([@schisamo][])
 
 BUG FIXES:
 
@@ -18,7 +18,7 @@ IMPROVEMENTS:
 
 * PR [#48][]: Don't install Chef if `--no-provision` is specified. ([@tmatilai][])
 * PR [#50][]: Update README.md with vagrant-parallels compatibility. ([@wizonesolutions][])
-* PR [#56][]: Add Rubocop support.
+* PR [#56][]: Add Rubocop support and fix style errors. ([@schisamo][])
 
 BUG FIXES:
 
