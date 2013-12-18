@@ -29,4 +29,16 @@ Vagrant.configure("2") do |config|
       chef.add_recipe "chef-inator"
     end
   end
+
+  config.vm.define :chef_already_installed do |installed_config|
+    installed_config.vm.box = 'opscode-ubuntu-12.04-chef-11.4.4'
+    installed_config.vm.box_url = 'https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_chef-11.4.4.box'
+
+    installed_config.omnibus.chef_version = '11.4.4'
+
+    installed_config.vm.provision :chef_solo do |chef|
+      chef.cookbooks_path = File.expand_path("../../../support/cookbooks", __FILE__)
+      chef.add_recipe "chef-inator"
+    end
+  end
 end
