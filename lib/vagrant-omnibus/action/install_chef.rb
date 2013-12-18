@@ -78,8 +78,11 @@ module VagrantPlugins
           version = nil
           command = 'echo $(chef-solo -v)'
           @machine.communicate.sudo(command) do |type, data|
-            v = data.chomp if [:stderr, :stdout].include?(type)
-            version ||= v.split[1] unless v.empty?
+            if [:stderr, :stdout].include?(type)
+              next if data =~ /stdin: is not a tty/
+              v = data.chomp
+              version ||= v.split[1] unless v.empty?
+            end
           end
           version
         end
