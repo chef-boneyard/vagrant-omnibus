@@ -1,3 +1,13 @@
+## 1.2.1 (December 17, 2013)
+
+IMPROVEMENTS:
+
+* Acceptance test coverage that verifies Chef is not reinstalled into a system where the desired version of Chef already exists.
+
+BUG FIXES:
+
+* PR [#57][]: Filter `stdin is not a tty` when querying installed Chef version. ([@scalp42][])
+
 ## 1.2.0 (December 17, 2013)
 
 FEATURES:
@@ -110,11 +120,13 @@ BUG FIXES:
 [#52]: https://github.com/schisamo/vagrant-omnibus/issues/52
 [#53]: https://github.com/schisamo/vagrant-omnibus/issues/53
 [#56]: https://github.com/schisamo/vagrant-omnibus/issues/56
+[#57]: https://github.com/schisamo/vagrant-omnibus/issues/57
 [@comutt]: https://github.com/comutt
 [@matsu911]: https://github.com/matsu911
 [@michfield]: https://github.com/michfield
 [@petecheslock]: https://github.com/petecheslock
 [@rjocoleman]: https://github.com/rjocoleman
+[@scalp42]: https://github.com/scalp42
 [@schisamo]: https://github.com/schisamo
 [@smdahlen]: https://github.com/smdahlen
 [@srenatus]: https://github.com/srenatus
