@@ -3,6 +3,7 @@
 
 # plugins don't seem to be auto-loaded from the bundle
 require 'vagrant-omnibus'
+require 'vagrant-windows'
 
 Vagrant.configure("2") do |config|
 
@@ -37,6 +38,24 @@ Vagrant.configure("2") do |config|
     installed_config.omnibus.chef_version = '11.4.4'
 
     installed_config.vm.provision :chef_solo do |chef|
+      chef.cookbooks_path = File.expand_path("../../../support/cookbooks", __FILE__)
+      chef.add_recipe "chef-inator"
+    end
+  end
+
+  config.vm.define :chef_on_windows do |win_config|
+    win_config.vm.box = 'opscode-windows-6.1'
+    win_config.vm.box_url = 'http://opscode-vm.s3.amazonaws.com/vagrant/boxes/opscode-windows-6.1.box'
+    win_config.vm.boot_timeout = 500
+    win_config.omnibus.chef_version = '11.6.0'
+    
+    win_config.vm.network :forwarded_port, guest: 80, host: 8080
+	win_config.vm.network :forwarded_port, guest: 5985, host: 5985
+	win_config.vm.network :forwarded_port, guest: 1433, host: 1433
+	win_config.vm.guest = :windows
+	win_config.winrm.timeout = 500
+
+    win_config.vm.provision :chef_solo do |chef|
       chef.cookbooks_path = File.expand_path("../../../support/cookbooks", __FILE__)
       chef.add_recipe "chef-inator"
     end
