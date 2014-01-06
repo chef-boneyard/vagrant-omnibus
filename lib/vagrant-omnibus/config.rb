@@ -46,7 +46,7 @@ module VagrantPlugins
 
         unless valid_chef_version?(chef_version)
           msg = <<-EOH
-'#{chef_version}' is not a valid version of Chef.
+'#{ chef_version }' is not a valid version of Chef.
 
 A list of valid versions can be found at: http://www.opscode.com/chef/install/
           EOH
