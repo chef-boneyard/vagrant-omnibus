@@ -31,26 +31,14 @@ module VagrantPlugins
           @logger =
             Log4r::Logger.new('vagrantplugins::omnibus::action::installchef')
           @machine = env[:machine]
-          @install_sh = ENV['OMNIBUS_INSTALL_URL'] ||
-            'https://www.opscode.com/chef/install.sh'
-          @local_install_name = 'install.sh'
-          if windows_guest?
-            @local_install_name = 'install.bat'
-            chef_version = @machine.config.omnibus.chef_version
-            @install_sh = ENV['OMNIBUS_INSTALL_URL'] ||
-                windows_chef_url(chef_version)
-            @logger.info("Chef windows installer \
-                         will be taken from: #{@install_sh}")
-          end
-          # Config#finalize! SHOULD be called automatically
+          @install_script = find_install_script
           @machine.config.omnibus.finalize!
         end
 
         def call(env)
           @app.call(env)
 
-          return if !@machine.communicate.ready? ||
-                    !provision_enabled?(env)
+          return unless @machine.communicate.ready? && provision_enabled?(env)
 
           desired_version = @machine.config.omnibus.chef_version
           unless desired_version.nil?
@@ -73,34 +61,16 @@ module VagrantPlugins
 
         private
 
-        def windows_chef_url(chef_version)
-          # create URL to get desired chef version
-          # adapted from https://github.com/opscode/knife-windows/blob/
-          # master/lib/chef/knife/bootstrap/windows-chef-client-msi.erb
-          windows_version = /Version (?<major_minor>\d+\.\d+)\.(?<build>\d+)/
-                            .match(`cmd /c ver`)
-          case windows_version[:major_minor]
-          when '5.2'
-            machine_os = '2003r2'
-          when '6.0'
-            machine_os = '2008'
-          when '6.1'
-            machine_os = '2008r2'
-          when '6.2', '6.3'
-            machine_os = '2012'
+        # Determines what flavor of install script should be used to
+        # install Omnibus Chef package.
+        def find_install_script
+          if !ENV['OMNIBUS_INSTALL_URL'].nil?
+            ENV['OMNIBUS_INSTALL_URL']
+          elsif windows_guest?
+            'http://www.getchef.com/chef/install.msi'
           else
-            machine_os = '2008r2'
+            'https://www.getchef.com/chef/install.sh'
           end
-          # detect architecture
-          windows_arch = ENV['PROCESSOR_ARCHITEW6432'] ||
-              ENV['PROCESSOR_ARCHITECTURE']
-          case windows_arch.downcase
-          when 'amd64'
-            machine_arch = 'x86_64'
-          else
-            machine_arch = 'i686'
-          end
-          "https://www.opscode.com/chef/download?p=windows&pv=#{machine_os}&m=#{machine_arch}&v=#{chef_version}"
         end
 
         def windows_guest?
@@ -165,7 +135,7 @@ module VagrantPlugins
             env[:tmp_path].join(Time.now.to_i.to_s + "-#{@local_install_name}")
           @logger.info("Downloading #{@local_install_name} to:
                        #{@install_sh_temp_path}")
-          url = @install_sh
+          url = @install_script
           if File.file?(url) || url !~ /^[a-z0-9]+:.*$/i
             @logger.info('Assuming URL is a file.')
             file_path = File.expand_path(url)
