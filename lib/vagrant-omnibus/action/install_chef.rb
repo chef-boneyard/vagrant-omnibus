@@ -28,14 +28,13 @@ module VagrantPlugins
       class InstallChef
         def initialize(app, env)
           @app = app
-          @is_windows_guest = windows_guest?(env)
           @logger =
             Log4r::Logger.new('vagrantplugins::omnibus::action::installchef')
           @machine = env[:machine]
           @install_sh = ENV['OMNIBUS_INSTALL_URL'] ||
             'https://www.opscode.com/chef/install.sh'
           @local_install_name = 'install.sh'
-          if @is_windows_guest
+          if windows_guest?
             @local_install_name = 'install.bat'
             chef_version = @machine.config.omnibus.chef_version
             @install_sh = ENV['OMNIBUS_INSTALL_URL'] ||
@@ -104,8 +103,8 @@ module VagrantPlugins
           "https://www.opscode.com/chef/download?p=windows&pv=#{machine_os}&m=#{machine_arch}&v=#{chef_version}"
         end
 
-        def windows_guest?(env)
-          env[:machine].config.vm.guest.eql?(:windows)
+        def windows_guest?
+          @machine.config.vm.guest.eql?(:windows)
         end
 
         def provision_enabled?(env)
@@ -115,7 +114,7 @@ module VagrantPlugins
         def installed_version
           version = nil
           opts = nil
-          if @is_windows_guest
+          if windows_guest?
             command = 'cmd.exe /c chef-solo -v 2>&0'
             opts = { shell: :cmd, error_check: false }
           else
@@ -138,7 +137,7 @@ module VagrantPlugins
 
           @machine.communicate.tap do |comm|
             comm.upload(@install_sh_temp_path, @local_install_name)
-            if @is_windows_guest
+            if windows_guest?
               install_cmd = "cmd.exe /c #{@local_install_name}"
             else
               # TODO: Execute with `sh` once install.sh removes it's bash-isms.
@@ -182,7 +181,7 @@ module VagrantPlugins
           # to a temporary path. We store the temporary path as
           # an instance variable so that the `#recover` method can access it.
           begin
-            if @is_windows_guest
+            if windows_guest?
               # create install.bat file in @install_sh_temp_path location
               File.open(@install_sh_temp_path, 'w') do |f|
                 f.puts <<-eos
