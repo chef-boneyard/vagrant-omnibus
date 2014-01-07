@@ -4,8 +4,17 @@ require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 require 'yard'
 
-Rubocop::RakeTask.new
 YARD::Rake::YardocTask.new
+
+Rubocop::RakeTask.new(:rubocop) do |task|
+  task.patterns = [
+    '**/*.rb',
+    '**/Vagrantfile',
+    '*.gemspec',
+    'Gemfile',
+    'Rakefile'
+  ]
+end
 
 namespace :test do
 
