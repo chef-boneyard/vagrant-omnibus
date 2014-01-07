@@ -5,7 +5,7 @@ Vagrant.configure('2') do |config|
   config.omnibus.chef_version = :latest
 
   config.vm.box = 'digital_ocean'
-  config.vm.synced_folder '.', '/vagrant', :disabled => true
+  config.vm.synced_folder '.', '/vagrant', disabled: true
 
   config.vm.provider :digital_ocean do |provider, override|
     provider.client_id = ENV['DO_CLIENT_ID']
@@ -17,7 +17,8 @@ Vagrant.configure('2') do |config|
   end
 
   config.vm.provision :chef_solo do |chef|
-    chef.cookbooks_path = File.expand_path("../../../support/cookbooks", __FILE__)
-    chef.add_recipe "chef-inator"
+    chef.cookbooks_path =
+      File.expand_path('../../../support/cookbooks', __FILE__)
+    chef.add_recipe 'chef-inator'
   end
 end
