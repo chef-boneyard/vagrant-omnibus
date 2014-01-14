@@ -4,5 +4,7 @@ AllCops:
     - bin/**
 Encoding:
   Enabled: false
+ClassLength:
+  Enabled: false
 MethodLength:
-  Max: 30
+  Enabled: false
