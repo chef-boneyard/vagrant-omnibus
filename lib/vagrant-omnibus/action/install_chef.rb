@@ -100,9 +100,8 @@ module VagrantPlugins
           end
           @machine.communicate.sudo(command, opts) do |type, data|
             if [:stderr, :stdout].include?(type)
-              next if data =~ /stdin: is not a tty/
-              v = data.chomp
-              version ||= v.split[1] unless v.empty?
+              version_match = data.match(/^Chef: (.+)/)
+              version = version_match.captures[0].strip if version_match
             end
           end
           version
