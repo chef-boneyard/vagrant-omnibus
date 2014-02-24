@@ -17,6 +17,8 @@
 require 'rubygems/dependency'
 require 'rubygems/dependency_installer'
 require 'vagrant'
+require 'vagrant/errors'
+require 'vagrant/util/template_renderer'
 
 module VagrantPlugins
   #
@@ -41,7 +43,15 @@ module VagrantPlugins
         end
       end
 
-      def validate(machine)
+      #
+      # Performs validation and immediately raises an exception for any
+      # detected errors.
+      #
+      # @raise [Vagrant::Errors::ConfigInvalid]
+      #   if validation fails
+      #
+      def validate!(machine)
+        finalize!
         errors = []
 
         unless valid_chef_version?(chef_version)
@@ -53,7 +63,13 @@ A list of valid versions can be found at: http://www.opscode.com/chef/install/
           errors << msg
         end
 
-        { 'Omnibus Plugin' => errors }
+        if errors.any?
+          rendered_errors = Vagrant::Util::TemplateRenderer.render(
+                              'config/validation_failed',
+                              errors: { 'vagrant-omnibus' => errors }
+                            )
+          fail Vagrant::Errors::ConfigInvalid, errors: rendered_errors
+        end
       end
 
       private
