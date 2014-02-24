@@ -112,14 +112,14 @@ The test are also executed by Travis CI every time code is pushed to GitHub.
 Currently this repo ships with a set of basic acceptance tests that will:
 
 * Provision a Vagrant instance.
-* Attempt to install Chef 11.4.0 using this plugin.
+* Attempt to install Chef using this plugin.
 * Perform a very basic chef-solo run to ensure Chef is in fact installed.
 
-The acceptance tests are run against the Vagrant providers mentioned above. The
-acceptance tests can be run with:
+The acceptance tests can be run against a subset of the Vagrant providers 
+listed above. The acceptance tests can be run with:
 
 ```
-rake test:acceptance
+rake test:acceptance:PROVIDER_NAME
 ```
 
 And as expected, all acceptance tests only uses provisioner-less baseboxes and

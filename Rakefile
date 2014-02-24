@@ -6,6 +6,18 @@ require 'yard'
 
 # rubocop:disable LineLength
 
+def run_acceptance_tests(provider = 'virtualbox')
+  puts '=================================================================='
+  puts "Running acceptance tests against '#{provider}' provider..."
+  puts '=================================================================='
+
+  Dir.chdir("test/acceptance/#{provider}") do
+    system('vagrant destroy -f')
+    system("vagrant up --provider=#{provider}")
+    system('vagrant destroy -f')
+  end
+end
+
 YARD::Rake::YardocTask.new
 
 Rubocop::RakeTask.new(:rubocop) do |task|
@@ -24,42 +36,33 @@ namespace :test do
     t.pattern = 'test/unit/**/*_spec.rb'
   end
 
-  desc 'Run acceptance tests..these actually launch Vagrant sessions.'
-  task :acceptance, :provider do |t, args|
+  namespace :acceptance do
+    desc 'Run acceptance tests with AWS provider'
+    task :aws do
+      unless system("vagrant box list | grep 'dummy\s*(aws)' &>/dev/null")
+        system('vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box')
+      end
+      run_acceptance_tests('aws')
+    end
 
-    # ensure all required dummy boxen are installed
-    %w{ aws rackspace }.each do |provider|
-      unless system("vagrant box list | grep 'dummy\s*(#{provider})' &>/dev/null")
-        system("vagrant box add dummy https://github.com/mitchellh/vagrant-#{provider}/raw/master/dummy.box")
+    desc 'Run acceptance tests with Digital Ocean provider'
+    task 'digital_ocean' do
+      unless system("vagrant box list | grep 'digital_ocean' &>/dev/null")
+        system('vagrant box add digital_ocean https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box')
       end
     end
 
-    unless system("vagrant box list | grep 'digital_ocean' &>/dev/null")
-      system('vagrant box add digital_ocean https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box')
-    end
-
-    all_providers = Dir['test/acceptance/*'].map do |dir|
-      File.basename(File.expand_path(dir))
-    end
-
-    # If a provider wasn't passed to the task run acceptance tests against
-    # ALL THE PROVIDERS!
-    providers = if args[:provider] && all_providers.include?(args[:provider])
-                  [args[:provider]]
-                else
-                  all_providers
-                end
-
-    providers.each do |provider|
-      puts '=================================================================='
-      puts "Running acceptance tests against '#{provider}' provider..."
-      puts '=================================================================='
-
-      Dir.chdir("test/acceptance/#{provider}") do
-        system('vagrant destroy -f')
-        system("vagrant up --provider=#{provider}")
-        system('vagrant destroy -f')
+    desc 'Run acceptance tests with Rackspace provider'
+    task :rackspace do
+      unless system("vagrant box list | grep 'dummy\s*(rackspace)' &>/dev/null")
+        system('vagrant box add dummy https://github.com/mitchellh/vagrant-rackspace/raw/master/dummy.box')
       end
+      run_acceptance_tests('aws')
+    end
+
+    desc 'Run acceptance tests with VirtualBox provider'
+    task :virtualbox do
+      run_acceptance_tests('virtualbox')
     end
   end
 end
