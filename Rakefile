@@ -20,14 +20,18 @@ end
 
 YARD::Rake::YardocTask.new
 
-Rubocop::RakeTask.new(:rubocop) do |task|
-  task.patterns = [
-    '**/*.rb',
-    '**/Vagrantfile',
-    '*.gemspec',
-    'Gemfile',
-    'Rakefile'
-  ]
+namespace :style do
+  require 'rubocop/rake_task'
+  desc 'Run Ruby style checks'
+  Rubocop::RakeTask.new(:ruby) do |task|
+    task.patterns = [
+      '**/*.rb',
+      '**/Vagrantfile',
+      '*.gemspec',
+      'Gemfile',
+      'Rakefile'
+    ]
+  end
 end
 
 namespace :test do
@@ -66,3 +70,12 @@ namespace :test do
     end
   end
 end
+
+# We cannot run Test Kitchen on Travis CI yet...
+namespace :travis do
+  desc 'Run tests on Travis'
+  task ci: ['style:ruby', 'test:unit']
+end
+
+# The default rake task should just run it all
+task default: ['style:ruby', 'test:unit', 'test:acceptance:virtualbox']
