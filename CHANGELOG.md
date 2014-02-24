@@ -1,3 +1,19 @@
+## 1.3.0 (February 24, 2014)
+
+FEATURES:
+
+* PR [#59][], PR [#60][]: Windows guest support! ([@jarig][])([@schisamo][])
+
+IMPROVEMENTS:
+
+* PR [#61][]: Make detection of currently installed Chef version more robust. ([@ampedandwired][])
+* Create explicit tasks for supported provider acceptance tests. ([@schisamo][])
+* Add Ruby 2.1.0 to the Travis CI test matrix. ([@schisamo][])
+
+BUG FIXES:
+
+* Issue [#13][]: Perform config validation at action execution time. ([@schisamo][])
+
 ## 1.2.1 (December 17, 2013)
 
 IMPROVEMENTS:
@@ -100,6 +116,7 @@ BUG FIXES:
 [#8]: https://github.com/schisamo/vagrant-omnibus/issues/8
 [#10]: https://github.com/schisamo/vagrant-omnibus/issues/10
 [#12]: https://github.com/schisamo/vagrant-omnibus/issues/12
+[#13]: https://github.com/schisamo/vagrant-omnibus/issues/13
 [#15]: https://github.com/schisamo/vagrant-omnibus/issues/15
 [#17]: https://github.com/schisamo/vagrant-omnibus/issues/17
 [#19]: https://github.com/schisamo/vagrant-omnibus/issues/19
@@ -121,7 +138,12 @@ BUG FIXES:
 [#53]: https://github.com/schisamo/vagrant-omnibus/issues/53
 [#56]: https://github.com/schisamo/vagrant-omnibus/issues/56
 [#57]: https://github.com/schisamo/vagrant-omnibus/issues/57
+[#59]: https://github.com/schisamo/vagrant-omnibus/issues/59
+[#60]: https://github.com/schisamo/vagrant-omnibus/issues/60
+[#61]: https://github.com/schisamo/vagrant-omnibus/issues/61
+[@ampedandwired]: https://github.com/ampedandwired
 [@comutt]: https://github.com/comutt
+[@jarig]: https://github.com/jarig
 [@matsu911]: https://github.com/matsu911
 [@michfield]: https://github.com/michfield
 [@petecheslock]: https://github.com/petecheslock
