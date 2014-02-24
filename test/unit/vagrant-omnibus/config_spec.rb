@@ -6,7 +6,10 @@
 #
 require_relative '../spec_helper'
 
+# rubocop:disable LineLength
+
 describe VagrantPlugins::Omnibus::Config do
+  let(:machine) { double('machine') }
   let(:instance) { described_class.new }
 
   subject(:config) do
@@ -26,17 +29,13 @@ describe VagrantPlugins::Omnibus::Config do
     its(:chef_version) { should match(/\d*\.\d*\.\d*/) }
   end
 
-  describe '#validate' do
-    let(:machine) { double('machine') }
-    let(:error_hash_key) { 'Omnibus Plugin' }
-    let(:result) { subject.validate(machine) }
-    let(:errors) { result[error_hash_key] }
-
-    it 'returns a Hash with an `Omnibus Plugin` key' do
-      result.should be_a(Hash)
-      result.should have_key(error_hash_key)
+  describe 'validate' do
+    it 'should be no-op' do
+      expect(subject.validate(machine)).to eq('VagrantPlugins::Omnibus::Config' => [])
     end
+  end
 
+  describe '#validate!' do
     describe 'chef_version validation' do
       {
         '11.4.0' => {
@@ -56,11 +55,11 @@ describe VagrantPlugins::Omnibus::Config do
           let(:chef_version) { version_string }
           if opts[:valid]
             it 'passes' do
-              errors.should be_empty
+              expect { subject.validate!(machine) }.to_not raise_error
             end
           else
             it 'fails' do
-              errors.should_not be_empty
+              expect { subject.validate!(machine) }.to raise_error(Vagrant::Errors::ConfigInvalid)
             end
           end
         end

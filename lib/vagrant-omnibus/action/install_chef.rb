@@ -32,13 +32,15 @@ module VagrantPlugins
             Log4r::Logger.new('vagrantplugins::omnibus::action::installchef')
           @machine = env[:machine]
           @install_script = find_install_script
-          @machine.config.omnibus.finalize!
         end
 
         def call(env)
           @app.call(env)
 
           return unless @machine.communicate.ready? && provision_enabled?(env)
+
+          # Perform delayed validation
+          @machine.config.omnibus.validate!(@machine)
 
           desired_version = @machine.config.omnibus.chef_version
           unless desired_version.nil?
