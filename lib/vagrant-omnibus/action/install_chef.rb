@@ -194,7 +194,17 @@ module VagrantPlugins
 
         def recover(env)
           if @script_tmp_path && File.exist?(@script_tmp_path)
-            File.unlink(@script_tmp_path)
+            # Try extra hard to unlink the file so that it reliably works
+            # on Windows hosts as well, see:
+            # http://alx.github.io/2009/01/27/ruby-wundows-unlink.html
+            file_deleted = false
+            while !file_deleted
+              begin
+                File.unlink(@script_tmp_path)
+                file_deleted = true
+              rescue
+              end
+            end
           end
         end
       end
