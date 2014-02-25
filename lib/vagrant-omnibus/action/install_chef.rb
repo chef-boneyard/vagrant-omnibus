@@ -198,11 +198,12 @@ module VagrantPlugins
             # on Windows hosts as well, see:
             # http://alx.github.io/2009/01/27/ruby-wundows-unlink.html
             file_deleted = false
-            while !file_deleted
+            until file_deleted
               begin
                 File.unlink(@script_tmp_path)
                 file_deleted = true
-              rescue
+              rescue Errno::EACCES
+                @logger.debug("failed to unlink #{@script_tmp_path}. retry...")
               end
             end
           end
