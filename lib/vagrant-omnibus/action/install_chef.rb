@@ -121,8 +121,10 @@ module VagrantPlugins
             if windows_guest?
               install_cmd = "cmd.exe /c #{install_script_name} #{version}"
             else
-              install_cmd =
-                "sh #{install_script_name} -v #{shell_escaped_version} 2>&1"
+              # install_cmd = "sh #{install_script_name} -v #{shell_escaped_version} 2>&1"
+              puts 'zzzzzzzzzzzzz'
+              dl_path = '/tmp/vagrant-cache/chef'
+              install_cmd = "sh #{install_script_name} -v #{shell_escaped_version} -d #{dl_path} 2>&1"
             end
             comm.sudo(install_cmd) do |type, data|
               if [:stderr, :stdout].include?(type)
