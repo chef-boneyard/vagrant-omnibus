@@ -78,7 +78,7 @@ module VagrantPlugins
         # The specific directory to which the omnibus package should be
         # downloaded to on the guest, if any
         def omnibus_download_dir
-          ENV['OMNIBUS_DOWNLOAD_DIRECTORY']
+          ENV['OMNIBUS_DOWNLOAD_DIR']
         end
 
         def install_script_name
