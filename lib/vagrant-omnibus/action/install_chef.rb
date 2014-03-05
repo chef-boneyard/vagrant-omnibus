@@ -129,7 +129,7 @@ module VagrantPlugins
             else
               install_cmd = "sh #{install_script_name}"
               install_cmd << " -v #{shell_escaped_version}"
-              if omnibus_download_dir
+              unless omnibus_download_dir.nil? || omnibus_download_dir.empty?
                 install_cmd << " -d #{omnibus_download_dir}"
               end
               install_cmd << ' 2>&1'
