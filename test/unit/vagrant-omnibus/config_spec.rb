@@ -65,6 +65,13 @@ describe VagrantPlugins::Omnibus::Config do
         end
       end
     end # describe chef_version
-  end # describe #validate
 
+    describe 'not specified chef_version validation' do
+      it 'passes' do
+        Gem::DependencyInstaller.any_instance.stub(:find_gems_with_sources).and_return([])
+        expect { subject.validate!(machine) }.to_not raise_error
+      end
+    end # describe not specified chef_version validation
+
+  end # describe #validate
 end

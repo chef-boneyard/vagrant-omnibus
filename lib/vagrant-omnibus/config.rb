@@ -54,7 +54,7 @@ module VagrantPlugins
         finalize!
         errors = []
 
-        unless valid_chef_version?(chef_version)
+        if !chef_version.nil? && !valid_chef_version?(chef_version)
           msg = <<-EOH
 '#{ chef_version }' is not a valid version of Chef.
 
