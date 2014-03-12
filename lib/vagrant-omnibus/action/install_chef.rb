@@ -91,12 +91,20 @@ module VagrantPlugins
           env.fetch(:provision_enabled, true)
         end
 
+        def communication_opts
+          if windows_guest?
+            { shell: 'cmd' }
+          else
+            { shell: 'sh' }
+          end
+        end
+
         def installed_version
           version = nil
-          opts = nil
+          opts = communication_opts
           if windows_guest?
             command = 'cmd.exe /c chef-solo -v 2>&0'
-            opts = { shell: :cmd, error_check: false }
+            opts[:error_check] = false
           else
             command = 'echo $(chef-solo -v)'
           end
@@ -124,7 +132,7 @@ module VagrantPlugins
               install_cmd =
                 "sh #{install_script_name} -v #{shell_escaped_version} 2>&1"
             end
-            comm.sudo(install_cmd) do |type, data|
+            comm.sudo(install_cmd, communication_opts) do |type, data|
               if [:stderr, :stdout].include?(type)
                 next if data =~ /stdin: is not a tty/
                 env[:ui].info(data)
