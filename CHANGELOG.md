@@ -1,3 +1,14 @@
+## 1.3.1 (March 12, 2014)
+
+IMPROVEMENTS:
+
+* PR [#66][]: Run install.sh with `sh` rather than `bash`. ([@tknerr][]) 
+
+BUG FIXES:
+
+* PR [#65][]: Make unlinking the install.sh reliably work on windows hosts. ([@tknerr][])
+* Issue [#69][]: Ensure all remote commands are executed with `sh`. ([@schisamo][])
+
 ## 1.3.0 (February 24, 2014)
 
 FEATURES:
@@ -141,6 +152,9 @@ BUG FIXES:
 [#59]: https://github.com/schisamo/vagrant-omnibus/issues/59
 [#60]: https://github.com/schisamo/vagrant-omnibus/issues/60
 [#61]: https://github.com/schisamo/vagrant-omnibus/issues/61
+[#65]: https://github.com/schisamo/vagrant-omnibus/issues/65
+[#66]: https://github.com/schisamo/vagrant-omnibus/issues/66
+[#69]: https://github.com/schisamo/vagrant-omnibus/issues/69
 [@ampedandwired]: https://github.com/ampedandwired
 [@comutt]: https://github.com/comutt
 [@jarig]: https://github.com/jarig
@@ -152,5 +166,6 @@ BUG FIXES:
 [@schisamo]: https://github.com/schisamo
 [@smdahlen]: https://github.com/smdahlen
 [@srenatus]: https://github.com/srenatus
+[@tknerr]: https://github.com/tknerr
 [@tmatilai]: https://github.com/tmatilai
 [@wizonesolutions]: https://github.com/wizonesolutions
