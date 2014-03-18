@@ -75,6 +75,12 @@ module VagrantPlugins
           end
         end
 
+        # The specific directory to which the omnibus package should be
+        # downloaded to on the guest, if any
+        def omnibus_download_dir
+          ENV['OMNIBUS_DOWNLOAD_DIR']
+        end
+
         def install_script_name
           if windows_guest?
             'install.bat'
@@ -129,8 +135,12 @@ module VagrantPlugins
             if windows_guest?
               install_cmd = "cmd.exe /c #{install_script_name} #{version}"
             else
-              install_cmd =
-                "sh #{install_script_name} -v #{shell_escaped_version} 2>&1"
+              install_cmd = "sh #{install_script_name}"
+              install_cmd << " -v #{shell_escaped_version}"
+              unless omnibus_download_dir.nil? || omnibus_download_dir.empty?
+                install_cmd << " -d #{omnibus_download_dir}"
+              end
+              install_cmd << ' 2>&1'
             end
             comm.sudo(install_cmd, communication_opts) do |type, data|
               if [:stderr, :stdout].include?(type)
