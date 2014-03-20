@@ -80,7 +80,7 @@ module VagrantPlugins
         end
 
         def cache_packages?
-          @machine.config.cache_packages
+          @machine.config.omnibus.cache_packages
         end
 
         def cachier_present?
