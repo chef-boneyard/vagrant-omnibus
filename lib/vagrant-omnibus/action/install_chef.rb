@@ -63,16 +63,29 @@ module VagrantPlugins
 
         private
 
-        # Determines what flavor of install script should be used to
-        # install Omnibus Chef package.
+        # Determines which install script should be used to install the
+        # Omnibus Chef package. Order of precedence:
+        # 1. from config
+        # 2. from env var
+        # 3. default
         def find_install_script
-          if !ENV['OMNIBUS_INSTALL_URL'].nil?
-            ENV['OMNIBUS_INSTALL_URL']
-          elsif windows_guest?
+          config_install_script || env_install_script || default_install_script
+        end
+
+        def default_install_script
+          if windows_guest?
             'http://www.getchef.com/chef/install.msi'
           else
             'https://www.getchef.com/chef/install.sh'
           end
+        end
+
+        def config_install_script
+          @machine.config.omnibus.install_script
+        end
+
+        def env_install_script
+          ENV['OMNIBUS_INSTALL_URL']
         end
 
         def cached_omnibus_download_dir
