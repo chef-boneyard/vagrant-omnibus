@@ -54,6 +54,7 @@ namespace :test do
       unless system("vagrant box list | grep 'digital_ocean' &>/dev/null")
         system('vagrant box add digital_ocean https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box')
       end
+      run_acceptance_tests('digital_ocean')
     end
 
     desc 'Run acceptance tests with Rackspace provider'
@@ -61,7 +62,7 @@ namespace :test do
       unless system("vagrant box list | grep 'dummy\s*(rackspace)' &>/dev/null")
         system('vagrant box add dummy https://github.com/mitchellh/vagrant-rackspace/raw/master/dummy.box')
       end
-      run_acceptance_tests('aws')
+      run_acceptance_tests('rackspace')
     end
 
     desc 'Run acceptance tests with VirtualBox provider'
