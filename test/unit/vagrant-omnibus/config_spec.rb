@@ -15,7 +15,7 @@ describe VagrantPlugins::Omnibus::Config do
   subject(:config) do
     instance.tap do |o|
       o.chef_version = chef_version if defined?(chef_version)
-      o.install_script = install_script if defined?(install_script)
+      o.install_url = install_url if defined?(install_url)
       o.cache_packages = cache_packages if defined?(cache_packages)
       o.finalize!
     end
@@ -23,7 +23,7 @@ describe VagrantPlugins::Omnibus::Config do
 
   describe 'defaults' do
     its(:chef_version) { should be_nil }
-    its(:install_script) { should be_nil }
+    its(:install_url) { should be_nil }
     its(:cache_packages) { should be_true }
   end
 
@@ -33,9 +33,9 @@ describe VagrantPlugins::Omnibus::Config do
     its(:chef_version) { should match(/\d*\.\d*\.\d*/) }
   end
 
-  describe 'setting a custom `install_script`' do
-    let(:install_script) { 'http://some_path.com/install.sh' }
-    its(:install_script) { should eq('http://some_path.com/install.sh') }
+  describe 'setting a custom `install_url`' do
+    let(:install_url) { 'http://some_path.com/install.sh' }
+    its(:install_url) { should eq('http://some_path.com/install.sh') }
   end
 
   describe 'the `cache_packages` config option behaves truthy' do
