@@ -27,10 +27,11 @@ module VagrantPlugins
     class Config < Vagrant.plugin('2', :config)
       # @return [String]
       #   The version of Chef to install.
-      attr_accessor :chef_version
+      attr_accessor :chef_version, :cache_packages
 
       def initialize
         @chef_version = UNSET_VALUE
+        @cache_packages = UNSET_VALUE
         @logger = Log4r::Logger.new('vagrantplugins::omnibus::config')
       end
 
@@ -41,6 +42,8 @@ module VagrantPlugins
           # resolve `latest` to a real version
           @chef_version = retrieve_latest_chef_version
         end
+        # enable caching by default
+        @cache_packages = true if @cache_packages == UNSET_VALUE
       end
 
       #
