@@ -66,6 +66,34 @@ Vagrant.configure("2") do |config|
 end
 ```
 
+Specify a custom install script:
+
+```ruby
+Vagrant.configure("2") do |config|
+
+  config.omnibus.install_url = 'http://acme.com/install.sh'
+  # config.omnibus.install_url = 'http://acme.com/install.msi'
+  # config.omnibus.install_url = '/some/path/on/the/host'
+
+  ...
+
+end
+```
+
+If [vagrant-cachier](https://github.com/fgrehm/vagrant-cachier) is present
+and `config.cache.auto_detect` enabled the downloaded omnibus packages will
+be cached by vagrant-cachier. In case you want to turn caching off:
+
+```ruby
+Vagrant.configure("2") do |config|
+
+  config.omnibus.cache_packages = false
+
+  ...
+
+end
+```
+
 This plugin is also multi-vm aware so it would possible to say install a 
 different version of Chef on each VM:
 
