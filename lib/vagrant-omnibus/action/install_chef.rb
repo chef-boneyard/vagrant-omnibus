@@ -69,10 +69,10 @@ module VagrantPlugins
         # 2. from env var
         # 3. default
         def find_install_script
-          config_install_script || env_install_script || default_install_script
+          config_install_url || env_install_url || default_install_url
         end
 
-        def default_install_script
+        def default_install_url
           if windows_guest?
             'http://www.getchef.com/chef/install.msi'
           else
@@ -80,11 +80,11 @@ module VagrantPlugins
           end
         end
 
-        def config_install_script
+        def config_install_url
           @machine.config.omnibus.install_script
         end
 
-        def env_install_script
+        def env_install_url
           ENV['OMNIBUS_INSTALL_URL']
         end
 
