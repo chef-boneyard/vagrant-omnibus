@@ -15,18 +15,35 @@ describe VagrantPlugins::Omnibus::Config do
   subject(:config) do
     instance.tap do |o|
       o.chef_version = chef_version if defined?(chef_version)
+      o.cache_packages = cache_packages if defined?(cache_packages)
       o.finalize!
     end
   end
 
   describe 'defaults' do
     its(:chef_version) { should be_nil }
+    its(:cache_packages) { should be_true }
   end
 
   describe 'resolving `:latest` to a real Chef version' do
     let(:chef_version) { :latest }
     its(:chef_version) { should be_a(String) }
     its(:chef_version) { should match(/\d*\.\d*\.\d*/) }
+  end
+
+  describe 'the `cache_packages` config option behaves truthy' do
+    [true, 'bla', 1, 0, Object].each do |obj|
+      describe "when `#{obj.to_s}` (#{obj.class})" do
+        let(:cache_packages) { obj }
+        its(:cache_packages) { should be_true }
+      end
+    end
+    [nil, false].each do |obj|
+      describe "when `#{obj.to_s}` (#{obj.class})" do
+        let(:cache_packages) { obj }
+        its(:cache_packages) { should be_false }
+      end
+    end
   end
 
   describe 'validate' do

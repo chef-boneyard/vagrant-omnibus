@@ -75,6 +75,26 @@ module VagrantPlugins
           end
         end
 
+        def cached_omnibus_download_dir
+          '/tmp/vagrant-cache/vagrant_omnibus'
+        end
+
+        def cache_packages?
+          @machine.config.cache_packages
+        end
+
+        def cachier_present?
+          defined?(VagrantPlugins::Cachier::Plugin)
+        end
+
+        def cachier_autodetect_enabled?
+          @machine.config.cache.auto_detect
+        end
+
+        def download_to_cached_dir?
+          cache_packages? && cachier_present? && cachier_autodetect_enabled?
+        end
+
         def install_script_name
           if windows_guest?
             'install.bat'
@@ -129,8 +149,12 @@ module VagrantPlugins
             if windows_guest?
               install_cmd = "cmd.exe /c #{install_script_name} #{version}"
             else
-              install_cmd =
-                "sh #{install_script_name} -v #{shell_escaped_version} 2>&1"
+              install_cmd = "sh #{install_script_name}"
+              install_cmd << " -v #{shell_escaped_version}"
+              if download_to_cached_dir?
+                install_cmd << " -d #{cached_omnibus_download_dir}"
+              end
+              install_cmd << ' 2>&1'
             end
             comm.sudo(install_cmd, communication_opts) do |type, data|
               if [:stderr, :stdout].include?(type)
