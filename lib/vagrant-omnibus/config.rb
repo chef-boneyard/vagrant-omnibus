@@ -27,10 +27,11 @@ module VagrantPlugins
     class Config < Vagrant.plugin('2', :config)
       # @return [String]
       #   The version of Chef to install.
-      attr_accessor :chef_version, :cache_packages
+      attr_accessor :chef_version, :install_script, :cache_packages
 
       def initialize
         @chef_version = UNSET_VALUE
+        @install_script = UNSET_VALUE
         @cache_packages = UNSET_VALUE
         @logger = Log4r::Logger.new('vagrantplugins::omnibus::config')
       end
@@ -44,6 +45,8 @@ module VagrantPlugins
         end
         # enable caching by default
         @cache_packages = true if @cache_packages == UNSET_VALUE
+        # nil means default install.sh|msi
+        @install_script = nil if @install_script == UNSET_VALUE
       end
 
       #
