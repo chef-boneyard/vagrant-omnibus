@@ -39,7 +39,7 @@ describe VagrantPlugins::Omnibus::Config do
   end
 
   describe 'the `cache_packages` config option behaves truthy' do
-    [true, 'bla', 1, 0, Object].each do |obj|
+    [true, 'something', :cachier].each do |obj|
       describe "when `#{obj.to_s}` (#{obj.class})" do
         let(:cache_packages) { obj }
         its(:cache_packages) { should be_true }
