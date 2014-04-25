@@ -81,7 +81,7 @@ module VagrantPlugins
         end
 
         def config_install_url
-          @machine.config.omnibus.install_script
+          @machine.config.omnibus.install_url
         end
 
         def env_install_url
