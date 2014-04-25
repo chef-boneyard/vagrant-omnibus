@@ -2,6 +2,16 @@ Chef Sugar Changelog
 ====================
 This file is used to list changes made in each version of the vagrant-omnibus plugin.
 
+1.4.0 (April 25, 2014)
+-------------------------
+### New Features
+
+- PR [#73][]: Full caching of omnibus package downloads! Huge thanks to [@tknerr][] for all all his Herculean effort coordinating this fix in [vagrant-cachier/#13](https://github.com/fgrehm/vagrant-cachier/issues/13) and [opscode-omnitruck/#3](https://github.com/opscode/opscode-omnitruck/pull/33).
+
+### Bug Fixes
+
+- PR [#67][]: No-op validation if `config.omnibus.chef_version` is `nil`. ([@skv-headless][])
+
 1.3.1 (March 12, 2014)
 ----------------------
 ### Improvements
@@ -159,7 +169,9 @@ This file is used to list changes made in each version of the vagrant-omnibus pl
 [#61]: https://github.com/schisamo/vagrant-omnibus/issues/61
 [#65]: https://github.com/schisamo/vagrant-omnibus/issues/65
 [#66]: https://github.com/schisamo/vagrant-omnibus/issues/66
+[#67]: https://github.com/schisamo/vagrant-omnibus/issues/67
 [#69]: https://github.com/schisamo/vagrant-omnibus/issues/69
+[#73]: https://github.com/schisamo/vagrant-omnibus/issues/73
 [@ampedandwired]: https://github.com/ampedandwired
 [@comutt]: https://github.com/comutt
 [@jarig]: https://github.com/jarig
@@ -169,6 +181,7 @@ This file is used to list changes made in each version of the vagrant-omnibus pl
 [@rjocoleman]: https://github.com/rjocoleman
 [@scalp42]: https://github.com/scalp42
 [@schisamo]: https://github.com/schisamo
+[@skv-headless]: https://github.com/skv-headless
 [@smdahlen]: https://github.com/smdahlen
 [@srenatus]: https://github.com/srenatus
 [@tknerr]: https://github.com/tknerr
