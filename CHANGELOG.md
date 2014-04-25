@@ -1,4 +1,4 @@
-Chef Sugar Changelog
+vagrant-omnibus Changelog
 ====================
 This file is used to list changes made in each version of the vagrant-omnibus plugin.
 
