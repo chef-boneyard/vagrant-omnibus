@@ -1,122 +1,127 @@
-## 1.3.1 (March 12, 2014)
+Chef Sugar Changelog
+====================
+This file is used to list changes made in each version of the vagrant-omnibus plugin.
 
-IMPROVEMENTS:
+1.3.1 (March 12, 2014)
+----------------------
+### Improvements
 
-* PR [#66][]: Run install.sh with `sh` rather than `bash`. ([@tknerr][]) 
+- PR [#66][]: Run install.sh with `sh` rather than `bash`. ([@tknerr][])
 
-BUG FIXES:
+### Bug Fixes
 
-* PR [#65][]: Make unlinking the install.sh reliably work on windows hosts. ([@tknerr][])
-* Issue [#69][]: Ensure all remote commands are executed with `sh`. ([@schisamo][])
+- PR [#65][]: Make unlinking the install.sh reliably work on windows hosts. ([@tknerr][])
+- Issue [#69][]: Ensure all remote commands are executed with `sh`. ([@schisamo][])
 
-## 1.3.0 (February 24, 2014)
+1.3.0 (February 24, 2014)
+-------------------------
+### New Features
 
-FEATURES:
+- PR [#59][], PR [#60][]: Windows guest support! ([@jarig][])([@schisamo][])
 
-* PR [#59][], PR [#60][]: Windows guest support! ([@jarig][])([@schisamo][])
+### Improvements
 
-IMPROVEMENTS:
+- PR [#61][]: Make detection of currently installed Chef version more robust. ([@ampedandwired][])
+- Create explicit tasks for supported provider acceptance tests. ([@schisamo][])
+- Add Ruby 2.1.0 to the Travis CI test matrix. ([@schisamo][])
 
-* PR [#61][]: Make detection of currently installed Chef version more robust. ([@ampedandwired][])
-* Create explicit tasks for supported provider acceptance tests. ([@schisamo][])
-* Add Ruby 2.1.0 to the Travis CI test matrix. ([@schisamo][])
+### Bug Fixes
 
-BUG FIXES:
+- Issue [#13][]: Perform config validation at action execution time. ([@schisamo][])
 
-* Issue [#13][]: Perform config validation at action execution time. ([@schisamo][])
+1.2.1 (December 17, 2013)
+-------------------------
+### Improvements
 
-## 1.2.1 (December 17, 2013)
+- Acceptance test coverage that verifies Chef is not reinstalled into a system where the desired version of Chef already exists. ([@schisamo][])
 
-IMPROVEMENTS:
+### Bug Fixes
 
-* Acceptance test coverage that verifies Chef is not reinstalled into a system where the desired version of Chef already exists. ([@schisamo][])
+- PR [#57][]: Filter `stdin is not a tty` when querying installed Chef version. ([@scalp42][])
 
-BUG FIXES:
+1.2.0 (December 17, 2013)
+-------------------------
+### New Features
 
-* PR [#57][]: Filter `stdin is not a tty` when querying installed Chef version. ([@scalp42][])
+- PR [#52][]: Change plugin name to correspond to gem name. ([@tmatilai][])
 
-## 1.2.0 (December 17, 2013)
+### Improvements
 
-FEATURES:
+- PR [#48][]: Don't install Chef if `--no-provision` is specified. ([@tmatilai][])
+- PR [#50][]: Update README.md with vagrant-parallels compatibility. ([@wizonesolutions][])
+- PR [#56][]: Add Rubocop support and fix style errors. ([@schisamo][])
 
-* PR [#52][]: Change plugin name to correspond to gem name. ([@tmatilai][])
+### Bug Fixes
 
-IMPROVEMENTS:
+- Issue [#12][]: Ensure plugin is no-op on Windows guests. ([@schisamo][])
+- PR [#53][]: Ensure installed version check works on all platforms. ([@comutt][])
 
-* PR [#48][]: Don't install Chef if `--no-provision` is specified. ([@tmatilai][])
-* PR [#50][]: Update README.md with vagrant-parallels compatibility. ([@wizonesolutions][])
-* PR [#56][]: Add Rubocop support and fix style errors. ([@schisamo][])
+1.1.2 (October 17, 2013)
+------------------------
+### Improvements
 
-BUG FIXES:
-
-* Issue [#12][]: Ensure plugin is no-op on Windows guests. ([@schisamo][])
-* PR [#53][]: Ensure installed version check works on all platforms. ([@comutt][])
-
-## 1.1.2 (October 17, 2013)
-
-IMPROVEMENTS:
-
-* PR [#41][]: Add vagrant-digitalocean to the list of supported providers. ([@tmatilai][])
-* PR [#45][]: Compatibility with vagrant-aws v0.4.0 ([@tmatilai][])
-* Use Vagrant's built in `Vagrant::Util::Downloader` class; removes requirement of the
+- PR [#41][]: Add vagrant-digitalocean to the list of supported providers. ([@tmatilai][])
+- PR [#45][]: Compatibility with vagrant-aws v0.4.0 ([@tmatilai][])
+- Use Vagrant's built in `Vagrant::Util::Downloader` class; removes requirement of the
   guest OS having `wget` or `curl` installed. ([@schisamo][])
 
-BUG FIXES:
+### Bug Fixes
 
-* PR [#43][]: Fix development dependencies and Travis tests. ([@tmatilai][])
-* Issue [#33][] Split fetching of `install.sh` from the actual execution ([@schisamo][])
+- PR [#43][]: Fix development dependencies and Travis tests. ([@tmatilai][])
+- Issue [#33][] Split fetching of `install.sh` from the actual execution ([@schisamo][])
 
-## 1.1.1 (September 4, 2013)
+1.1.1 (September 4, 2013)
+-------------------------
+### Bug Fixes
 
-BUG FIXES:
+- PR [#28][]: Include OpenStack provider into the list of working providers. ([@srenatus][])
+- PR [#32][], Issue [#31][]: No need to do sudo in sudo ([@matsu911][])
+- PR [#32][], Issue [#32][]: Fix the curl line to install the requested Chef version ([@tmatilai][])
+- PR [#37][]: Document that newer than v1.1.x Vagrant is fine, too. ([@tmatilai][])
+- PR [#38][]: Drop unneeded ConfigValidate action call ([@tmatilai][])
+- Issue [#27][]: Properly shell escape version strings ([@schisamo][])
 
-* PR [#28][]: Include OpenStack provider into the list of working providers. ([@srenatus][])
-* PR [#32][], Issue [#31][]: No need to do sudo in sudo ([@matsu911][])
-* PR [#32][], Issue [#32][]: Fix the curl line to install the requested Chef version ([@tmatilai][])
-* PR [#37][]: Document that newer than v1.1.x Vagrant is fine, too. ([@tmatilai][])
-* PR [#38][]: Drop unneeded ConfigValidate action call ([@tmatilai][])
-* Issue [#27][]: Properly shell escape version strings ([@schisamo][])
+1.1.0 (June 21, 2013)
+---------------------
+### New Features
 
-## 1.1.0 (June 21, 2013)
+- PR [#23][], Issue [#17][], Issue [#19][], Issue [#21][], Issue [#23][]: Support for all Vagrant providers that hook into `Vagrant::Action::Builtin::Provision` for provisioning. ([@smdahlen][], [@michfield][], [@rjocoleman][])
+- Issue [#15][]: Multi-VM Vagrantfiles are now fully supported. A global `omnibus.chef_version` will install the same version of Chef on all VMs OR declare a separate Chef version in the config block for each individual VM! ([@smdahlen][], [@schisamo][])
+- PR [#10][]: Optionally change the location of `install.sh` via the `OMNIBUS_INSTALL_URL` environment variable. Default is still https://www.opscode.com/chef/install.sh. , ([@petecheslock][])
 
-FEATURES:
+1.0.2 (April 20, 2013)
+----------------------
+### Improvements
 
-* PR [#23][], Issue [#17][], Issue [#19][], Issue [#21][], Issue [#23][]: Support for all Vagrant providers that hook into `Vagrant::Action::Builtin::Provision` for provisioning. ([@smdahlen][], [@michfield][], [@rjocoleman][])
-* Issue [#15][]: Multi-VM Vagrantfiles are now fully supported. A global `omnibus.chef_version` will install the same version of Chef on all VMs OR declare a separate Chef version in the config block for each individual VM! ([@smdahlen][], [@schisamo][])
-* PR [#10][]: Optionally change the location of `install.sh` via the `OMNIBUS_INSTALL_URL` environment variable. Default is still https://www.opscode.com/chef/install.sh. , ([@petecheslock][])
+- Unit test coverage for `VagrantPlugins::Omnibus::Config` ([@schisamo][])
+- Add Rackspace provider acceptance test. ([@schisamo][])
+- Parameterize the acceptance test Rake task, this allows you test run acceptance tests against a single provider. ([@schisamo][])
 
-## 1.0.2 (April 20, 2013)
+### Bug Fixes
 
-IMPROVEMENTS:
+- Issue [#2][]: Convert `Gem::Version` returned by `#retrieve_latest_chef_version` to a string. ([@schisamo][])
+- Issue [#6][]: RubyGems 2.0 compat: use #empty? to check for results. ([@schisamo][])
+- Issue [#7][]: Ensure 'vagrant-rackspace/action' is loaded. ([@schisamo][])
+- Issue [#8][]: Trigger plugin if machine state is `:active`. ([@schisamo][])
 
-* Unit test coverage for `VagrantPlugins::Omnibus::Config` ([@schisamo][])
-* Add Rackspace provider acceptance test. ([@schisamo][])
-* Parameterize the acceptance test Rake task, this allows you test run acceptance tests against a single provider. ([@schisamo][])
+1.0.1 (April 17, 2013)
+----------------------
+### Improvements
 
-BUG FIXES:
+- Issue [#2][]: Resolve `latest` to a real Chef version. This ensures the plugin does not attempt to re-install Chef on subsequent provisions. ([@schisamo][])
+- Issue [#4][]: Validate user provided value for omnibus.chef_version is in fact a real Chef version. ([@schisamo][])
+- Retrieve omnibus.chef_version directly from global config. ([@schisamo][])
+- Update development dependencies to vagrant (1.2.1) and vagrant-aws (0.2.1). ([@schisamo][])
 
-* Issue [#2][]: Convert `Gem::Version` returned by `#retrieve_latest_chef_version` to a string. ([@schisamo][])
-* Issue [#6][]: RubyGems 2.0 compat: use #empty? to check for results. ([@schisamo][])
-* Issue [#7][]: Ensure 'vagrant-rackspace/action' is loaded. ([@schisamo][])
-* Issue [#8][]: Trigger plugin if machine state is `:active`. ([@schisamo][])
+### Bug Fixes
 
-## 1.0.1 (April 17, 2013)
+- Issue [#3][]: Plugin now correctly operates in "no-op" node if now `omnibus.chef_version` is not present in the Vagrantfile. ([@schisamo][])
+- Use Ubuntu 12.04 release AMI for acceptance testing. ([@schisamo][])
 
-IMPROVEMENTS:
+1.0.0 (April 1, 2013)
+---------------------
 
-* Issue [#2][]: Resolve `latest` to a real Chef version. This ensures the plugin does not attempt to re-install Chef on subsequent provisions. ([@schisamo][])
-* Issue [#4][]: Validate user provided value for omnibus.chef_version is in fact a real Chef version. ([@schisamo][])
-* Retrieve omnibus.chef_version directly from global config. ([@schisamo][])
-* Update development dependencies to vagrant (1.2.1) and vagrant-aws (0.2.1). ([@schisamo][])
-
-BUG FIXES:
-
-* Issue [#3][]: Plugin now correctly operates in "no-op" node if now `omnibus.chef_version` is not present in the Vagrantfile. ([@schisamo][])
-* Use Ubuntu 12.04 release AMI for acceptance testing. ([@schisamo][])
-
-## 1.0.0 (April 1, 2013)
-
-* The initial release.
+- The initial release.
 
 <!--- The following link definition list is generated by PimpMyChangelog --->
 [#2]: https://github.com/schisamo/vagrant-omnibus/issues/2
