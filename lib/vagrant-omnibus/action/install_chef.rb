@@ -63,16 +63,49 @@ module VagrantPlugins
 
         private
 
-        # Determines what flavor of install script should be used to
-        # install Omnibus Chef package.
+        # Determines which install script should be used to install the
+        # Omnibus Chef package. Order of precedence:
+        # 1. from config
+        # 2. from env var
+        # 3. default
         def find_install_script
-          if !ENV['OMNIBUS_INSTALL_URL'].nil?
-            ENV['OMNIBUS_INSTALL_URL']
-          elsif windows_guest?
+          config_install_url || env_install_url || default_install_url
+        end
+
+        def default_install_url
+          if windows_guest?
             'http://www.getchef.com/chef/install.msi'
           else
             'https://www.getchef.com/chef/install.sh'
           end
+        end
+
+        def config_install_url
+          @machine.config.omnibus.install_script
+        end
+
+        def env_install_url
+          ENV['OMNIBUS_INSTALL_URL']
+        end
+
+        def cached_omnibus_download_dir
+          '/tmp/vagrant-cache/vagrant_omnibus'
+        end
+
+        def cache_packages?
+          @machine.config.omnibus.cache_packages
+        end
+
+        def cachier_present?
+          defined?(VagrantPlugins::Cachier::Plugin)
+        end
+
+        def cachier_autodetect_enabled?
+          @machine.config.cache.auto_detect
+        end
+
+        def download_to_cached_dir?
+          cache_packages? && cachier_present? && cachier_autodetect_enabled?
         end
 
         def install_script_name
@@ -129,8 +162,12 @@ module VagrantPlugins
             if windows_guest?
               install_cmd = "cmd.exe /c #{install_script_name} #{version}"
             else
-              install_cmd =
-                "sh #{install_script_name} -v #{shell_escaped_version} 2>&1"
+              install_cmd = "sh #{install_script_name}"
+              install_cmd << " -v #{shell_escaped_version}"
+              if download_to_cached_dir?
+                install_cmd << " -d #{cached_omnibus_download_dir}"
+              end
+              install_cmd << ' 2>&1'
             end
             comm.sudo(install_cmd, communication_opts) do |type, data|
               if [:stderr, :stdout].include?(type)
