@@ -1,7 +1,8 @@
-language: ruby
-bundler_args: --without=acceptance
 rvm:
   - 2.0.0
   - 2.1.0
+
+bundler_args: --jobs 7 --without=acceptance
+
 script:
-  - rake travis:ci
+  - bundle exec rake travis:ci
