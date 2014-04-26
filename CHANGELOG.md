@@ -1,5 +1,5 @@
 vagrant-omnibus Changelog
-====================
+=========================
 This file is used to list changes made in each version of the vagrant-omnibus plugin.
 
 1.4.0 (April 25, 2014)
