@@ -136,7 +136,7 @@ module VagrantPlugins
           version = nil
           opts = communication_opts
           if windows_guest?
-            command = 'cmd.exe /c chef-solo -v 2>&0'
+            command = 'cmd.exe /c chef-solo -v'
             opts[:error_check] = false
           else
             command = 'echo $(chef-solo -v)'
