@@ -69,6 +69,11 @@ namespace :test do
     task :virtualbox do
       run_acceptance_tests('virtualbox')
     end
+
+    desc 'Run acceptance tests with VMware provider'
+    task :vmware_fusion do
+      run_acceptance_tests('vmware_fusion')
+    end
   end
 end
 
