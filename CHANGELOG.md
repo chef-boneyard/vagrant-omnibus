@@ -2,6 +2,12 @@ vagrant-omnibus Changelog
 =========================
 This file is used to list changes made in each version of the vagrant-omnibus plugin.
 
+1.4.1 (April 26, 2014)
+----------------------
+### Bug Fixes
+
+- Issue [#79][]: Install command not idempotent on Windows. ([@schisamo][])
+
 1.4.0 (April 25, 2014)
 -------------------------
 ### New Features
@@ -172,6 +178,7 @@ This file is used to list changes made in each version of the vagrant-omnibus pl
 [#67]: https://github.com/schisamo/vagrant-omnibus/issues/67
 [#69]: https://github.com/schisamo/vagrant-omnibus/issues/69
 [#73]: https://github.com/schisamo/vagrant-omnibus/issues/73
+[#79]: https://github.com/schisamo/vagrant-omnibus/issues/79
 [@ampedandwired]: https://github.com/ampedandwired
 [@comutt]: https://github.com/comutt
 [@jarig]: https://github.com/jarig
