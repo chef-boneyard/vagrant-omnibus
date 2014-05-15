@@ -29,9 +29,15 @@ known to work with the following
 Ensure you have downloaded and installed Vagrant 1.1 or newer from the
 [Vagrant downloads page](http://downloads.vagrantup.com/).
 
-Installation is performed in the prescribed manner for Vagrant 1.1 plugins.
+For Vagrant 1.5 or newer, run:
 
+```console
+$ vagrant plugin install omnibus
 ```
+
+For older versions of Vagrant, you will need to prepend `vagrant-`.
+
+```console
 $ vagrant plugin install vagrant-omnibus
 ```
 
