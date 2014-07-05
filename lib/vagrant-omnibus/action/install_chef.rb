@@ -110,7 +110,7 @@ module VagrantPlugins
 
         def install_script_name
           if windows_guest?
-            'install.bat'
+            'install.ps1'
           else
             'install.sh'
           end
@@ -160,7 +160,7 @@ module VagrantPlugins
           @machine.communicate.tap do |comm|
             comm.upload(@script_tmp_path, install_script_name)
             if windows_guest?
-              install_cmd = "cmd.exe /c #{install_script_name} #{version}"
+              install_cmd = "powershell -File #{install_script_name} #{version}"
             else
               install_cmd = "sh #{install_script_name}"
               install_cmd << " -v #{shell_escaped_version}"
@@ -209,15 +209,7 @@ module VagrantPlugins
               # rubocop:disable LineLength, SpaceAroundBlockBraces
               #
               File.open(@script_tmp_path, 'w') do |f|
-                f.puts <<-EOH.gsub(/^\s{18}/, '')
-                  @echo off
-                  set version=%1
-                  set dest=%~dp0chef-client-%version%-1.windows.msi
-                  echo Downloading Chef %version% for Windows...
-                  powershell -command "(New-Object System.Net.WebClient).DownloadFile('#{url}?v=%version%', '%dest%')"
-                  echo Installing Chef %version%
-                  msiexec /q /i %dest%
-                EOH
+                f.puts power_shell_script
               end
               # rubocop:enable LineLength, SpaceAroundBlockBraces
             else
@@ -251,6 +243,47 @@ module VagrantPlugins
               end
             end
           end
+        end
+
+        def power_shell_script
+          <<-EOH.gsub(/^\s{18}/, '')
+            param (
+              [string]$version
+            )
+
+            $url = 'http://www.getchef.com/chef/install.msi?v=' + $version;
+            $dest = [System.IO.Path]::ChangeExtension([System.IO.Path]::GetTempFileName(), ".msi");
+            $downloader = New-Object System.Net.WebClient;
+
+            Try{
+               [console]::writeline("Downloading Chef {0} for Windows: from {1} to {2}", $version, $url, $dest);
+               $downloader.DownloadFile($url, $dest);
+            }Catch [System.Net.WebException]{
+              [console]::writeline("Error: {0}. Try using proxy {1}", $_.Exception.Message, $env:http_proxy);
+
+              $no_proxy = $env:NO_PROXY;
+              if ($no_proxy -eq $null){
+                $no_proxy = "127.0.0.1";
+              }
+
+              $proxy = New-Object System.Net.WebProxy($env:http_proxy, $true, ,$no_proxy.Split(','));
+              $downloader.proxy = $proxy
+              if (!$proxy.IsBypassed($url)){
+                [console]::writeline("Proxy authentication required.");
+                $regex = '^(?<protocol>.+?//)(?<user>.+?):(?<pass>.+?)@(.+)$';
+                if ($env:http_proxy -match $regex){
+                  $cred = new-Object  System.Net.NetworkCredential($matches['user'], $matches['pass']);
+                  $proxy.credentials = $cred;
+                }
+              }
+
+              [console]::writeline("Retry.. Downloading Chef {0} for Windows: from {1} to {2}", $version, $url, $dest);
+              $downloader.DownloadFile($url, $dest);
+            }
+
+            [console]::writeline("Installing Chef {0}", $version);
+            msiexec /qn /i $dest
+          EOH
         end
       end
     end
