@@ -6,3 +6,6 @@ en:
     download:
       downloading: "Downloading or copying install.sh..."
       interrupted: "Install.sh download was interrupted. Exiting."
+    errors:
+      vagrant_version: |-
+        vagrant-omnibus plugin requires Vagrant version %{requirement}
