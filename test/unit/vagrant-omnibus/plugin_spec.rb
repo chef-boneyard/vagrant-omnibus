@@ -2,6 +2,22 @@ require_relative '../spec_helper'
 
 describe VagrantPlugins::Omnibus::Plugin do
 
+  context 'action hooks' do
+    let(:hook) {double(append: true, prepend: true)}
+
+    it 'should hook InstallChef before Provision' do
+      hook_proc = described_class.components.action_hooks[:__all_actions__][0]
+      hook = double
+      expect(hook).to receive(:after).with(Vagrant::Action::Builtin::Provision, VagrantPlugins::Omnibus::Action::InstallChef)
+      hook_proc.call(hook)
+    end
+  end
+
+  it "should define a config of type :omnibus" do
+    default_config = described_class.components.configs[:top].to_hash[:"omnibus"]
+    expect(default_config).to be(VagrantPlugins::Omnibus::Config)
+  end
+
   describe '.check_vagrant_version' do
     before :each do
       stub_const('Vagrant::VERSION', '1.2.3')
