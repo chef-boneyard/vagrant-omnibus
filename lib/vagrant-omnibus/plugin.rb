@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-require_relative 'action/install_chef'
 
 module VagrantPlugins
   #
@@ -52,6 +51,7 @@ module VagrantPlugins
       end
 
       action_hook(:install_chef, Plugin::ALL_ACTIONS) do |hook|
+        require_relative 'action/install_chef'
         hook.after(Vagrant::Action::Builtin::Provision, Action::InstallChef)
 
         # The AWS provider < v0.4.0 uses a non-standard Provision action
