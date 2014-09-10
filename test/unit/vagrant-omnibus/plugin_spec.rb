@@ -1,4 +1,5 @@
 require_relative '../spec_helper'
+# rubocop:disable LineLength
 
 describe VagrantPlugins::Omnibus::Plugin do
 
