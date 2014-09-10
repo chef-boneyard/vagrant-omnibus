@@ -21,7 +21,7 @@ Vagrant.configure('2') do |config|
 
   config.vm.define :new_chef do |new_chef_config|
     new_chef_config.vm.box = 'opscode-ubuntu-12.04'
-    new_chef_config.vm.box_url = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/#{box_type}/opscode_ubuntu-12.04_chef-provisionerless.box'
+    new_chef_config.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/#{box_type}/opscode_ubuntu-12.04_chef-provisionerless.box"
 
     new_chef_config.omnibus.chef_version = :latest
 
@@ -33,7 +33,7 @@ Vagrant.configure('2') do |config|
 
   config.vm.define :old_chef do |old_chef_config|
     old_chef_config.vm.box = 'opscode-centos-6.5'
-    old_chef_config.vm.box_url = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/#{box_type}/opscode_centos-6.5_chef-provisionerless.box'
+    old_chef_config.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/#{box_type}/opscode_centos-6.5_chef-provisionerless.box"
 
     old_chef_config.omnibus.chef_version = '10.24.0'
 
@@ -47,7 +47,7 @@ Vagrant.configure('2') do |config|
   unless box_type == 'vmware'
     config.vm.define :chef_already_installed do |installed_config|
       installed_config.vm.box = 'opscode-ubuntu-12.04-chef-11.4.4'
-      installed_config.vm.box_url = 'https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_chef-11.4.4.box'
+      installed_config.vm.box_url = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_chef-11.4.4.box"
 
       installed_config.omnibus.chef_version = '11.4.4'
 
@@ -76,7 +76,7 @@ Vagrant.configure('2') do |config|
 
   config.vm.define :no_bash do |c|
     c.vm.box = 'opscode-freebsd-9.2'
-    c.vm.box_url = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/#{box_type}/opscode_freebsd-9.2_chef-provisionerless.box'
+    c.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/#{box_type}/opscode_freebsd-9.2_chef-provisionerless.box"
     c.omnibus.chef_version = :latest
 
     c.vm.synced_folder '.', '/vagrant', type: 'rsync', id: 'vagrant-root'
