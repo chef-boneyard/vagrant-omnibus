@@ -62,7 +62,7 @@ describe VagrantPlugins::Omnibus::Plugin do
       end
       it 'warns as stderr' do
         $stderr.should_receive(:puts).with(err_msg)
-        subject rescue nil
+        expect { subject }.to raise_error(err_msg)
       end
     end
 
