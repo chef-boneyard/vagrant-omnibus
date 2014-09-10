@@ -41,12 +41,12 @@ module VagrantPlugins
       # @raise [VagrantPlugins::ProxyConf::VagrantVersionError] if this plugin
       # is incompatible with the Vagrant version
       def self.check_vagrant_version!
-        if !check_vagrant_version(VAGRANT_VERSION_REQUIREMENT)
+        unless check_vagrant_version(VAGRANT_VERSION_REQUIREMENT)
           msg = I18n.t(
             'vagrant-omnibus.errors.vagrant_version',
             requirement: VAGRANT_VERSION_REQUIREMENT.inspect)
           $stderr.puts msg
-          raise msg
+          fail msg
         end
       end
 
