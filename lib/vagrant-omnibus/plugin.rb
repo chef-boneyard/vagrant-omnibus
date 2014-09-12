@@ -14,12 +14,6 @@
 # limitations under the License.
 #
 
-# This is a sanity check to make sure no one is attempting to install
-# this into an early Vagrant version.
-if Vagrant::VERSION < '1.1.0'
-  fail 'The Vagrant Omnibus plugin is only compatible with Vagrant 1.1+'
-end
-
 module VagrantPlugins
   #
   module Omnibus
@@ -30,6 +24,31 @@ module VagrantPlugins
       This plugin ensures the desired version of Chef is installed
       via the platform-specific Omnibus packages.
       DESC
+
+      VAGRANT_VERSION_REQUIREMENT = '>= 1.1.0'
+
+      # Returns true if the Vagrant version fulfills the requirements
+      #
+      # @param requirements [String, Array<String>] the version requirement
+      # @return [Boolean]
+      def self.check_vagrant_version(*requirements)
+        Gem::Requirement.new(*requirements).satisfied_by?(
+          Gem::Version.new(Vagrant::VERSION))
+      end
+
+      # Verifies that the Vagrant version fulfills the requirements
+      #
+      # @raise [VagrantPlugins::ProxyConf::VagrantVersionError] if this plugin
+      # is incompatible with the Vagrant version
+      def self.check_vagrant_version!
+        unless check_vagrant_version(VAGRANT_VERSION_REQUIREMENT)
+          msg = I18n.t(
+            'vagrant-omnibus.errors.vagrant_version',
+            requirement: VAGRANT_VERSION_REQUIREMENT.inspect)
+          $stderr.puts msg
+          fail msg
+        end
+      end
 
       action_hook(:install_chef, Plugin::ALL_ACTIONS) do |hook|
         require_relative 'action/install_chef'
