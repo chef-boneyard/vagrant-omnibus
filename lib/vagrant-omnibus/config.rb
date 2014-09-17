@@ -39,9 +39,6 @@ module VagrantPlugins
       def finalize!
         if @chef_version == UNSET_VALUE
           @chef_version = nil
-        elsif @chef_version.to_s == 'latest'
-          # resolve `latest` to a real version
-          @chef_version = retrieve_latest_chef_version
         end
         # enable caching by default
         @cache_packages = true if @cache_packages == UNSET_VALUE
@@ -80,40 +77,19 @@ A list of valid versions can be found at: http://www.opscode.com/chef/install/
 
       private
 
-      # Query RubyGems.org's Ruby API and retrive the latest version of Chef.
-      def retrieve_latest_chef_version
-        available_gems =
-          dependency_installer.find_gems_with_sources(chef_gem_dependency)
-        spec, _source =
-        if available_gems.respond_to?(:last)
-          # DependencyInstaller sorts the results such that the last one is
-          # always the one it considers best.
-          spec_with_source = available_gems.last
-          spec_with_source
-        else
-          # Rubygems 2.0 returns a Gem::Available set, which is a
-          # collection of AvailableSet::Tuple structs
-          available_gems.pick_best!
-          best_gem = available_gems.set.first
-          best_gem && [best_gem.spec, best_gem.source]
-        end
-
-        spec && spec.version.to_s
-      end
-
       # Query RubyGems.org's Ruby API to see if the user-provided Chef version
       # is in fact a real Chef version!
       def valid_chef_version?(version)
-        is_valid = false
+        return true if version.to_s == "latest"
         begin
           available = dependency_installer.find_gems_with_sources(
             chef_gem_dependency(version)
           )
-          is_valid = true unless available.empty?
         rescue ArgumentError => e
           @logger.debug("#{version} is not a valid Chef version: #{e}")
+          return false
         end
-        is_valid
+        return !available.empty?
       end
 
       def dependency_installer
