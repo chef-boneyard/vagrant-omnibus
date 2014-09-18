@@ -64,16 +64,16 @@ describe VagrantPlugins::Omnibus::Config do
       {
         '11.4.0' => {
           description: 'valid Chef version string',
-          valid: true
+          valid: true,
         },
         '10.99.99' => {
           description: 'invalid Chef version string',
-          valid: false
+          valid: false,
         },
         'FUFUFU' => {
           description: 'invalid RubyGems version string',
-          valid: false
-        }
+          valid: false,
+        },
       }.each_pair do |version_string, opts|
         context "#{opts[:description]}: #{version_string}" do
           let(:chef_version) { version_string }

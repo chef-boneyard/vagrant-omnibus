@@ -33,7 +33,8 @@ module VagrantPlugins
       # @return [Boolean]
       def self.check_vagrant_version(*requirements)
         Gem::Requirement.new(*requirements).satisfied_by?(
-          Gem::Version.new(Vagrant::VERSION))
+          Gem::Version.new(Vagrant::VERSION),
+        )
       end
 
       # Verifies that the Vagrant version fulfills the requirements
@@ -44,8 +45,9 @@ module VagrantPlugins
         unless check_vagrant_version(VAGRANT_VERSION_REQUIREMENT)
           msg = I18n.t(
             'vagrant-omnibus.errors.vagrant_version',
-            requirement: VAGRANT_VERSION_REQUIREMENT.inspect)
-          $stderr.puts msg
+            requirement: VAGRANT_VERSION_REQUIREMENT.inspect,
+          )
+          $stderr.puts(msg)
           fail msg
         end
       end
@@ -60,8 +62,10 @@ module VagrantPlugins
         # mitchellh/vagrant-aws/blob/v0.3.0/lib/vagrant-aws/action.rb#L105
         #
         if defined? VagrantPlugins::AWS::Action::TimedProvision
-          hook.after(VagrantPlugins::AWS::Action::TimedProvision,
-                     Action::InstallChef)
+          hook.after(
+            VagrantPlugins::AWS::Action::TimedProvision,
+            Action::InstallChef,
+          )
         end
       end
 

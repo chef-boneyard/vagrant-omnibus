@@ -69,7 +69,7 @@ A list of valid versions can be found at: http://www.opscode.com/chef/install/
         if errors.any?
           rendered_errors = Vagrant::Util::TemplateRenderer.render(
                               'config/validation_failed',
-                              errors: { 'vagrant-omnibus' => errors }
+                              errors: { 'vagrant-omnibus' => errors },
                             )
           fail Vagrant::Errors::ConfigInvalid, errors: rendered_errors
         end
@@ -83,7 +83,7 @@ A list of valid versions can be found at: http://www.opscode.com/chef/install/
         return true if version.to_s == "latest"
         begin
           available = dependency_installer.find_gems_with_sources(
-            chef_gem_dependency(version)
+            chef_gem_dependency(version),
           )
         rescue ArgumentError => e
           @logger.debug("#{version} is not a valid Chef version: #{e}")
