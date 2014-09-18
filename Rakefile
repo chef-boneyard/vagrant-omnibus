@@ -29,7 +29,7 @@ namespace :style do
       '**/Vagrantfile',
       '*.gemspec',
       'Gemfile',
-      'Rakefile'
+      'Rakefile',
     ]
   end
 end
