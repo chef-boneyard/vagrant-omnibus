@@ -27,10 +27,9 @@ describe VagrantPlugins::Omnibus::Config do
     its(:cache_packages) { should be_true }
   end
 
-  describe 'resolving `:latest` to a real Chef version' do
+  describe 'should no longer resolve :latest to a Chef version' do
     let(:chef_version) { :latest }
-    its(:chef_version) { should be_a(String) }
-    its(:chef_version) { should match(/\d*\.\d*\.\d*/) }
+    its(:chef_version) { should eql(:latest) }
   end
 
   describe 'setting a custom `install_url`' do
