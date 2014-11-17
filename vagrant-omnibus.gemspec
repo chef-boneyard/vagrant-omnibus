@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
                        ' Chef is installed via the platform-specific Omnibus' \
                        ' packages.'
   spec.summary       = spec.description
-  spec.homepage      = 'https://github.com/schisamo/vagrant-omnibus'
+  spec.homepage      = 'https://github.com/opscode/vagrant-omnibus'
   spec.license       = 'Apache 2.0'
 
   spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
