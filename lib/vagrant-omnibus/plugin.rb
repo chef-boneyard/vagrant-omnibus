@@ -38,7 +38,7 @@ module VagrantPlugins
 
       # Verifies that the Vagrant version fulfills the requirements
       #
-      # @raise [VagrantPlugins::ProxyConf::VagrantVersionError] if this plugin
+      # @raise [VagrantPlugins::Omnibus::VagrantVersionError] if this plugin
       # is incompatible with the Vagrant version
       def self.check_vagrant_version!
         unless check_vagrant_version(VAGRANT_VERSION_REQUIREMENT)
