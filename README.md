@@ -26,9 +26,8 @@ known to work with the following
 
 ## Installation
 
-Ensure you have downloaded and installed Vagrant 1.1 or newer from the
-[Vagrant downloads page](http://www.vagrantup.com/downloads). If you require
-Windows support then Vagrant 1.6.1 or newer is needed.
+Ensure you have downloaded and installed Vagrant 1.7.1 or newer from the
+[Vagrant downloads page](http://www.vagrantup.com/downloads). 
 
 Installation is performed in the prescribed manner for Vagrant 1.1 plugins.
 
