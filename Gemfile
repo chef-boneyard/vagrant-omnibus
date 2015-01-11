@@ -14,6 +14,7 @@ group :acceptance do
   gem "vagrant-digitalocean", "~> 0.5"
   gem "vagrant-aws", "~> 0.4"
   gem "vagrant-rackspace", "~> 0.1"
+  gem "vagrant-linode", "~> 0.1"
 end
 
 group :docs do

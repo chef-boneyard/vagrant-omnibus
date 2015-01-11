@@ -1,0 +1,23 @@
+Vagrant.require_plugin('vagrant-omnibus')
+Vagrant.require_plugin('vagrant-linode')
+
+Vagrant.configure('2') do |config|
+  config.omnibus.chef_version = :latest
+
+  config.vm.box = 'linode'
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+
+  config.vm.provider :linode do |provider, override|
+    provider.token = ENV['LINODE_API_KEY']
+    provider.datacenter = 'newark'
+    provider.plan = '1024'
+    provider.distribution = 'Ubuntu 12.04 LTS'
+    override.ssh.private_key_path = '~/.ssh/id_rsa'
+  end
+
+  config.vm.provision :chef_solo do |chef|
+    chef.cookbooks_path =
+      File.expand_path('../../../support/cookbooks', __FILE__)
+    chef.add_recipe 'chef-inator'
+  end
+end

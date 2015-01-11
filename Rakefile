@@ -65,6 +65,14 @@ namespace :test do
       run_acceptance_tests("rackspace")
     end
 
+    desc "Run acceptance tests with Linode provider"
+    task ":linode" do
+      unless system("vagrant box list | grep 'linode' &>/dev/null")
+        system("vagrant box add linode https://github.com/displague/vagrant-linode/raw/master/box/linode.box")
+      end
+      run_acceptance_tests("linode")
+    end
+
     desc "Run acceptance tests with VirtualBox provider"
     task :virtualbox do
       run_acceptance_tests("virtualbox")
