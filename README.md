@@ -1,7 +1,7 @@
 # vagrant-omnibus
 
 [![Gem Version](https://badge.fury.io/rb/vagrant-omnibus.png)](https://rubygems.org/gems/vagrant-omnibus)
-[![Build Status](https://travis-ci.org/opscode/vagrant-omnibus.png?branch=master)](https://travis-ci.org/opscode/vagrant-omnibus)
+[![Build Status](https://travis-ci.org/chef/vagrant-omnibus.png?branch=master)](https://travis-ci.org/chef/vagrant-omnibus)
 [![Dependency Status](https://gemnasium.com/opscode/vagrant-omnibus.png)](https://gemnasium.com/opscode/vagrant-omnibus)
 [![Code Climate](https://codeclimate.com/github/opscode/vagrant-omnibus.png)](https://codeclimate.com/github/opscode/vagrant-omnibus)
 
