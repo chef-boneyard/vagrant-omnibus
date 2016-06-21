@@ -158,7 +158,7 @@ module VagrantPlugins
           shell_escaped_version = Shellwords.escape(version)
 
           @machine.communicate.tap do |comm|
-            comm.upload(@script_tmp_path, install_script_name)
+            comm.upload(@script_tmp_path.to_s, install_script_name)
             if windows_guest?
               install_cmd = "cmd.exe /c #{install_script_name} #{version}"
             else
