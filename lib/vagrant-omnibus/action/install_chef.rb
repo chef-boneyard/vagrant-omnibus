@@ -116,6 +116,14 @@ module VagrantPlugins
           end
         end
 
+        def install_script_path
+          if windows_guest?
+            "$env:temp/vagrant-omnibus/#{install_script_name}"
+          else
+            "/tmp/vagrant-omnibus/#{install_script_name}"
+          end
+        end
+
         def windows_guest?
           @machine.config.vm.guest.eql?(:windows)
         end
@@ -126,7 +134,7 @@ module VagrantPlugins
 
         def communication_opts
           if windows_guest?
-            { shell: 'cmd' }
+            { shell: 'powershell' }
           else
             { shell: 'sh' }
           end
@@ -135,12 +143,8 @@ module VagrantPlugins
         def installed_version
           version = nil
           opts = communication_opts
-          if windows_guest?
-            command = 'cmd.exe /c chef-solo -v'
-            opts[:error_check] = false
-          else
-            command = 'echo $(chef-solo -v)'
-          end
+          opts[:error_check] = false if windows_guest?
+          command = 'echo $(chef-solo -v)'
           @machine.communicate.sudo(command, opts) do |type, data|
             if [:stderr, :stdout].include?(type)
               version_match = data.match(/^Chef: (.+)/)
@@ -158,11 +162,11 @@ module VagrantPlugins
           shell_escaped_version = Shellwords.escape(version)
 
           @machine.communicate.tap do |comm|
-            comm.upload(@script_tmp_path, install_script_name)
+            comm.upload(@script_tmp_path, install_script_path)
             if windows_guest?
-              install_cmd = "cmd.exe /c #{install_script_name} #{version}"
+              install_cmd = "& #{install_script_path} #{version}"
             else
-              install_cmd = "sh #{install_script_name}"
+              install_cmd = "sh #{install_script_path}"
               install_cmd << " -v #{shell_escaped_version}"
               if download_to_cached_dir?
                 install_cmd << " -d #{cached_omnibus_download_dir}"
@@ -183,8 +187,9 @@ module VagrantPlugins
         # Vagrant TMP directory.
         #
         def fetch_or_create_install_script(env)
-          @script_tmp_path =
-            env[:tmp_path].join("#{Time.now.to_i.to_s}-#{install_script_name}")
+          @script_tmp_path = env[:tmp_path].join(
+            "#{Time.now.to_i.to_s}-#{install_script_name}"
+          ).to_s
 
           @logger.info("Generating install script at: #{@script_tmp_path}")
 
