@@ -116,12 +116,16 @@ module VagrantPlugins
           end
         end
 
-        def install_script_path
+        def install_script_folder
           if windows_guest?
-            "$env:temp/vagrant-omnibus/#{install_script_name}"
+            '$env:temp/vagrant-omnibus'
           else
-            "/tmp/vagrant-omnibus/#{install_script_name}"
+            '/tmp/vagrant-omnibus'
           end
+        end
+
+        def install_script_path
+          File.join(install_script_folder, install_script_name)
         end
 
         def windows_guest?
@@ -162,7 +166,12 @@ module VagrantPlugins
           shell_escaped_version = Shellwords.escape(version)
 
           @machine.communicate.tap do |comm|
+            unless windows_guest?
+              comm.execute("mkdir -p #{install_script_folder}")
+            end
+
             comm.upload(@script_tmp_path, install_script_path)
+
             if windows_guest?
               install_cmd = "& #{install_script_path} #{version}"
             else
