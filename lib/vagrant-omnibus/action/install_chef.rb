@@ -47,13 +47,13 @@ module VagrantPlugins
             if installed_version == desired_version
               env[:ui].info I18n.t(
                 'vagrant-omnibus.action.installed',
-                version: desired_version
+                version: desired_version,
               )
             else
               fetch_or_create_install_script(env)
               env[:ui].info I18n.t(
                 'vagrant-omnibus.action.installing',
-                version: desired_version
+                version: desired_version,
               )
               install(desired_version, env)
               recover(env)
@@ -238,7 +238,7 @@ module VagrantPlugins
               downloader = Vagrant::Util::Downloader.new(
                 url,
                 @script_tmp_path,
-                {}
+                {},
               )
               downloader.download!
             end

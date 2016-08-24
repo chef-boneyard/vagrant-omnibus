@@ -50,7 +50,8 @@ describe VagrantPlugins::Omnibus::Plugin do
     before :each do
       stub_const(
         'VagrantPlugins::ProxyConf::Plugin::VAGRANT_VERSION_REQUIREMENT',
-        requirement)
+        requirement,
+      )
       stub_const('Vagrant::VERSION', vagrant_version)
       $stderr.stub(:puts)
     end
