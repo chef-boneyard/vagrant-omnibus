@@ -23,7 +23,7 @@ require 'vagrant/util/template_renderer'
 module VagrantPlugins
   #
   module Omnibus
-    # @author Seth Chisamore <schisamo@opscode.com>
+    # @author Seth Chisamore <schisamo@chef.io>
     class Config < Vagrant.plugin('2', :config)
       # @return [String]
       #   The version of Chef to install.

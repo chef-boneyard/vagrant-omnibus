@@ -7,12 +7,12 @@ Gem::Specification.new do |spec|
   spec.name          = 'vagrant-omnibus'
   spec.version       = VagrantPlugins::Omnibus::VERSION
   spec.authors       = ['Seth Chisamore']
-  spec.email         = ['schisamo@opscode.com']
+  spec.email         = ['schisamo@chef.io']
   spec.description   = 'A Vagrant plugin that ensures the desired version of' \
                        ' Chef is installed via the platform-specific Omnibus' \
                        ' packages.'
   spec.summary       = spec.description
-  spec.homepage      = 'https://github.com/opscode/vagrant-omnibus'
+  spec.homepage      = 'https://github.com/chef/vagrant-omnibus'
   spec.license       = 'Apache 2.0'
 
   spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
