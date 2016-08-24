@@ -12,13 +12,13 @@ with provisioner-less baseboxes OR cloud images.
 The plugin should work correctly with most all providers that hook into 
 `Vagrant::Action::Builtin::Provision` for provisioning and is 
 known to work with the following 
-[Vagrant providers](http://docs.vagrantup.com/v2/providers/index.html):
+[Vagrant providers](https://www.vagrantup.com/docs/providers/index.html):
 
 * VirtualBox (part of core)
 * AWS (ships in [vagrant-aws](https://github.com/mitchellh/vagrant-aws) plugin)
 * Rackspace (ships in [vagrant-rackspace](https://github.com/mitchellh/vagrant-rackspace)
   plugin)
-* VMWare Fusion (can be [purchased from Hashicorp](http://www.vagrantup.com/vmware))
+* VMWare Fusion (can be [purchased from Hashicorp](https://www.vagrantup.com/vmware/))
 * LXC (ships in [vagrant-lxc](https://github.com/fgrehm/vagrant-lxc))
 * OpenStack (ships in [vagrant-openstack-plugin](https://github.com/cloudbau/vagrant-openstack-plugin))
 * Digital Ocean (ships in [vagrant-digitalocean](https://github.com/smdahlen/vagrant-digitalocean))
@@ -27,7 +27,7 @@ known to work with the following
 ## Installation
 
 Ensure you have downloaded and installed Vagrant 1.1 or newer from the
-[Vagrant downloads page](http://www.vagrantup.com/downloads). If you require
+[Vagrant downloads page](https://www.vagrantup.com/downloads.html). If you require
 Windows support then Vagrant 1.6.1 or newer is needed.
 
 Installation is performed in the prescribed manner for Vagrant 1.1 plugins.
