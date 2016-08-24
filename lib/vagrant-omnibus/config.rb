@@ -64,7 +64,7 @@ module VagrantPlugins
           msg = <<-EOH
 '#{ chef_version }' is not a valid version of Chef.
 
-A list of valid versions can be found at: http://www.opscode.com/chef/install/
+A list of valid versions can be found at: https://downloads.chef.io/chef-client/
           EOH
           errors << msg
         end

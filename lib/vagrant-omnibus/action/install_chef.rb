@@ -74,9 +74,9 @@ module VagrantPlugins
 
         def default_install_url
           if windows_guest?
-            'http://www.getchef.com/chef/install.msi'
+            'http://www.chef.io/chef/install.msi'
           else
-            'https://www.getchef.com/chef/install.sh'
+            'https://www.chef.io/chef/install.sh'
           end
         end
 
