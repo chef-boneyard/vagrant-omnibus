@@ -17,7 +17,7 @@
 module VagrantPlugins
   #
   module Omnibus
-    # @author Seth Chisamore <schisamo@opscode.com>
+    # @author Seth Chisamore <schisamo@chef.io>
     class Plugin < Vagrant.plugin('2')
       name 'vagrant-omnibus'
       description <<-DESC

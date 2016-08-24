@@ -22,7 +22,7 @@ require 'vagrant/util/downloader'
 module VagrantPlugins
   module Omnibus
     module Action
-      # @author Seth Chisamore <schisamo@opscode.com>
+      # @author Seth Chisamore <schisamo@chef.io>
       #
       # This action installs Chef Omnibus packages at the desired version.
       class InstallChef
