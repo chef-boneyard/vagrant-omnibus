@@ -14,17 +14,17 @@
 # limitations under the License.
 #
 
-require 'rubygems/dependency'
-require 'rubygems/dependency_installer'
-require 'vagrant'
-require 'vagrant/errors'
-require 'vagrant/util/template_renderer'
+require "rubygems/dependency"
+require "rubygems/dependency_installer"
+require "vagrant"
+require "vagrant/errors"
+require "vagrant/util/template_renderer"
 
 module VagrantPlugins
   #
   module Omnibus
     # @author Seth Chisamore <schisamo@chef.io>
-    class Config < Vagrant.plugin('2', :config)
+    class Config < Vagrant.plugin("2", :config)
       # @return [String]
       #   The version of Chef to install.
       attr_accessor :chef_version, :install_url, :cache_packages
@@ -33,13 +33,13 @@ module VagrantPlugins
         @chef_version = UNSET_VALUE
         @install_url = UNSET_VALUE
         @cache_packages = UNSET_VALUE
-        @logger = Log4r::Logger.new('vagrantplugins::omnibus::config')
+        @logger = Log4r::Logger.new("vagrantplugins::omnibus::config")
       end
 
       def finalize!
         if @chef_version == UNSET_VALUE
           @chef_version = nil
-        elsif @chef_version.to_s == 'latest'
+        elsif @chef_version.to_s == "latest"
           # resolve `latest` to a real version
           @chef_version = retrieve_latest_chef_version
         end
@@ -71,10 +71,10 @@ A list of valid versions can be found at: https://downloads.chef.io/chef-client/
 
         if errors.any?
           rendered_errors = Vagrant::Util::TemplateRenderer.render(
-                              'config/validation_failed',
-                              errors: { 'vagrant-omnibus' => errors }
+                              "config/validation_failed",
+                              errors: { "vagrant-omnibus" => errors }
                             )
-          fail Vagrant::Errors::ConfigInvalid, errors: rendered_errors
+          raise Vagrant::Errors::ConfigInvalid, errors: rendered_errors
         end
       end
 
@@ -85,18 +85,18 @@ A list of valid versions can be found at: https://downloads.chef.io/chef-client/
         available_gems =
           dependency_installer.find_gems_with_sources(chef_gem_dependency)
         spec, _source =
-        if available_gems.respond_to?(:last)
-          # DependencyInstaller sorts the results such that the last one is
-          # always the one it considers best.
-          spec_with_source = available_gems.last
-          spec_with_source
-        else
-          # Rubygems 2.0 returns a Gem::Available set, which is a
-          # collection of AvailableSet::Tuple structs
-          available_gems.pick_best!
-          best_gem = available_gems.set.first
-          best_gem && [best_gem.spec, best_gem.source]
-        end
+          if available_gems.respond_to?(:last)
+            # DependencyInstaller sorts the results such that the last one is
+            # always the one it considers best.
+            spec_with_source = available_gems.last
+            spec_with_source
+          else
+            # Rubygems 2.0 returns a Gem::Available set, which is a
+            # collection of AvailableSet::Tuple structs
+            available_gems.pick_best!
+            best_gem = available_gems.set.first
+            best_gem && [best_gem.spec, best_gem.source]
+          end
 
         spec && spec.version.to_s
       end
@@ -121,7 +121,7 @@ A list of valid versions can be found at: https://downloads.chef.io/chef-client/
       end
 
       def chef_gem_dependency(version = nil)
-        Gem::Dependency.new('chef', version)
+        Gem::Dependency.new("chef", version)
       end
     end
   end

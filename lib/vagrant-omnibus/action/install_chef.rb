@@ -14,10 +14,10 @@
 # limitations under the License.
 #
 
-require 'log4r'
-require 'shellwords'
+require "log4r"
+require "shellwords"
 
-require 'vagrant/util/downloader'
+require "vagrant/util/downloader"
 
 module VagrantPlugins
   module Omnibus
@@ -29,7 +29,7 @@ module VagrantPlugins
         def initialize(app, env)
           @app = app
           @logger =
-            Log4r::Logger.new('vagrantplugins::omnibus::action::installchef')
+            Log4r::Logger.new("vagrantplugins::omnibus::action::installchef")
           @machine = env[:machine]
           @install_script = find_install_script
         end
@@ -46,13 +46,13 @@ module VagrantPlugins
           unless desired_version.nil?
             if installed_version == desired_version
               env[:ui].info I18n.t(
-                'vagrant-omnibus.action.installed',
+                "vagrant-omnibus.action.installed",
                 version: desired_version
               )
             else
               fetch_or_create_install_script(env)
               env[:ui].info I18n.t(
-                'vagrant-omnibus.action.installing',
+                "vagrant-omnibus.action.installing",
                 version: desired_version
               )
               install(desired_version, env)
@@ -74,9 +74,9 @@ module VagrantPlugins
 
         def default_install_url
           if windows_guest?
-            'http://www.chef.io/chef/install.msi'
+            "http://www.chef.io/chef/install.msi"
           else
-            'https://www.chef.io/chef/install.sh'
+            "https://www.chef.io/chef/install.sh"
           end
         end
 
@@ -85,11 +85,11 @@ module VagrantPlugins
         end
 
         def env_install_url
-          ENV['OMNIBUS_INSTALL_URL']
+          ENV["OMNIBUS_INSTALL_URL"]
         end
 
         def cached_omnibus_download_dir
-          '/tmp/vagrant-cache/vagrant_omnibus'
+          "/tmp/vagrant-cache/vagrant_omnibus"
         end
 
         def cache_packages?
@@ -110,17 +110,17 @@ module VagrantPlugins
 
         def install_script_name
           if windows_guest?
-            'install.bat'
+            "install.bat"
           else
-            'install.sh'
+            "install.sh"
           end
         end
 
         def install_script_folder
           if windows_guest?
-            '$env:temp/vagrant-omnibus'
+            "$env:temp/vagrant-omnibus"
           else
-            '/tmp/vagrant-omnibus'
+            "/tmp/vagrant-omnibus"
           end
         end
 
@@ -138,9 +138,9 @@ module VagrantPlugins
 
         def communication_opts
           if windows_guest?
-            { shell: 'powershell' }
+            { shell: "powershell" }
           else
-            { shell: 'sh' }
+            { shell: "sh" }
           end
         end
 
@@ -148,7 +148,7 @@ module VagrantPlugins
           version = nil
           opts = communication_opts
           opts[:error_check] = false if windows_guest?
-          command = 'echo $(chef-solo -v)'
+          command = "echo $(chef-solo -v)"
           @machine.communicate.sudo(command, opts) do |type, data|
             if [:stderr, :stdout].include?(type)
               version_match = data.match(/^Chef: (.+)/)
@@ -180,7 +180,7 @@ module VagrantPlugins
               if download_to_cached_dir?
                 install_cmd << " -d #{cached_omnibus_download_dir}"
               end
-              install_cmd << ' 2>&1'
+              install_cmd << " 2>&1"
             end
             comm.sudo(install_cmd, communication_opts) do |type, data|
               if [:stderr, :stdout].include?(type)
@@ -197,7 +197,7 @@ module VagrantPlugins
         #
         def fetch_or_create_install_script(env)
           @script_tmp_path = env[:tmp_path].join(
-            "#{Time.now.to_i.to_s}-#{install_script_name}"
+            "#{Time.now.to_i}-#{install_script_name}"
           ).to_s
 
           @logger.info("Generating install script at: #{@script_tmp_path}")
@@ -205,7 +205,7 @@ module VagrantPlugins
           url = @install_script
 
           if File.file?(url) || url !~ /^[a-z0-9]+:.*$/i
-            @logger.info('Assuming URL is a file.')
+            @logger.info("Assuming URL is a file.")
             file_path = File.expand_path(url)
             file_path = Vagrant::Util::Platform.cygwin_windows_path(file_path)
             url = "file:#{file_path}"
@@ -222,8 +222,8 @@ module VagrantPlugins
               #
               # rubocop:disable LineLength, SpaceAroundBlockBraces
               #
-              File.open(@script_tmp_path, 'w') do |f|
-                f.puts <<-EOH.gsub(/^\s{18}/, '')
+              File.open(@script_tmp_path, "w") do |f|
+                f.puts <<-EOH.gsub(/^\s{18}/, "")
                   @echo off
                   set version=%1
                   set dest=%~dp0chef-client-%version%-1.windows.msi
@@ -245,7 +245,7 @@ module VagrantPlugins
           rescue Vagrant::Errors::DownloaderInterrupted
             # The downloader was interrupted, so just return, because that
             # means we were interrupted as well.
-            env[:ui].info(I18n.t('vagrant-omnibus.download.interrupted'))
+            env[:ui].info(I18n.t("vagrant-omnibus.download.interrupted"))
             return
           end
         end

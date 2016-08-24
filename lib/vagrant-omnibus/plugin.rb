@@ -18,14 +18,14 @@ module VagrantPlugins
   #
   module Omnibus
     # @author Seth Chisamore <schisamo@chef.io>
-    class Plugin < Vagrant.plugin('2')
-      name 'vagrant-omnibus'
+    class Plugin < Vagrant.plugin("2")
+      name "vagrant-omnibus"
       description <<-DESC
       This plugin ensures the desired version of Chef is installed
       via the platform-specific Omnibus packages.
       DESC
 
-      VAGRANT_VERSION_REQUIREMENT = '>= 1.1.0'
+      VAGRANT_VERSION_REQUIREMENT = ">= 1.1.0"
 
       # Returns true if the Vagrant version fulfills the requirements
       #
@@ -43,15 +43,15 @@ module VagrantPlugins
       def self.check_vagrant_version!
         unless check_vagrant_version(VAGRANT_VERSION_REQUIREMENT)
           msg = I18n.t(
-            'vagrant-omnibus.errors.vagrant_version',
+            "vagrant-omnibus.errors.vagrant_version",
             requirement: VAGRANT_VERSION_REQUIREMENT.inspect)
           $stderr.puts msg
-          fail msg
+          raise msg
         end
       end
 
       action_hook(:install_chef, Plugin::ALL_ACTIONS) do |hook|
-        require_relative 'action/install_chef'
+        require_relative "action/install_chef"
         hook.after(Vagrant::Action::Builtin::Provision, Action::InstallChef)
 
         # The AWS provider < v0.4.0 uses a non-standard Provision action
@@ -66,7 +66,7 @@ module VagrantPlugins
       end
 
       config(:omnibus) do
-        require_relative 'config'
+        require_relative "config"
         Config
       end
     end
