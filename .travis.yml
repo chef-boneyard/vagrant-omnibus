@@ -1,6 +1,11 @@
 rvm:
-  - 2.0.0
-  - 2.1.0
+  - 2.1.9
+  - 2.2.5
+  - 2.3.1
+
+branches:
+  only:
+    - master
 
 before_install:
   - rvm @global do gem uninstall bundler --all --executables
