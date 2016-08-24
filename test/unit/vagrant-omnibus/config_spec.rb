@@ -4,12 +4,12 @@
 # More info here:
 # https://github.com/rspec/rspec-core/pull/831
 #
-require_relative '../spec_helper'
+require_relative "../spec_helper"
 
 # rubocop:disable LineLength
 
 describe VagrantPlugins::Omnibus::Config do
-  let(:machine) { double('machine') }
+  let(:machine) { double("machine") }
   let(:instance) { described_class.new }
 
   subject(:config) do
@@ -21,24 +21,24 @@ describe VagrantPlugins::Omnibus::Config do
     end
   end
 
-  describe 'defaults' do
+  describe "defaults" do
     its(:chef_version) { should be_nil }
     its(:install_url) { should be_nil }
     its(:cache_packages) { should be_true }
   end
 
-  describe 'should no longer resolve :latest to a Chef version' do
+  describe "should no longer resolve :latest to a Chef version" do
     let(:chef_version) { :latest }
     its(:chef_version) { should eql(:latest) }
   end
 
-  describe 'setting a custom `install_url`' do
-    let(:install_url) { 'http://some_path.com/install.sh' }
-    its(:install_url) { should eq('http://some_path.com/install.sh') }
+  describe "setting a custom `install_url`" do
+    let(:install_url) { "http://some_path.com/install.sh" }
+    its(:install_url) { should eq("http://some_path.com/install.sh") }
   end
 
-  describe 'the `cache_packages` config option behaves truthy' do
-    [true, 'something', :cachier].each do |obj|
+  describe "the `cache_packages` config option behaves truthy" do
+    [true, "something", :cachier].each do |obj|
       describe "when `#{obj}` (#{obj.class})" do
         let(:cache_packages) { obj }
         its(:cache_packages) { should be_true }
@@ -52,36 +52,36 @@ describe VagrantPlugins::Omnibus::Config do
     end
   end
 
-  describe 'validate' do
-    it 'should be no-op' do
-      expect(subject.validate(machine)).to eq('VagrantPlugins::Omnibus::Config' => [])
+  describe "validate" do
+    it "should be no-op" do
+      expect(subject.validate(machine)).to eq("VagrantPlugins::Omnibus::Config" => [])
     end
   end
 
-  describe '#validate!' do
-    describe 'chef_version validation' do
+  describe "#validate!" do
+    describe "chef_version validation" do
       {
-        '11.4.0' => {
-          description: 'valid Chef version string',
+        "11.4.0" => {
+          description: "valid Chef version string",
           valid: true,
         },
-        '10.99.99' => {
-          description: 'invalid Chef version string',
+        "10.99.99" => {
+          description: "invalid Chef version string",
           valid: false,
         },
-        'FUFUFU' => {
-          description: 'invalid RubyGems version string',
+        "FUFUFU" => {
+          description: "invalid RubyGems version string",
           valid: false,
         },
       }.each_pair do |version_string, opts|
         context "#{opts[:description]}: #{version_string}" do
           let(:chef_version) { version_string }
           if opts[:valid]
-            it 'passes' do
+            it "passes" do
               expect { subject.validate!(machine) }.to_not raise_error
             end
           else
-            it 'fails' do
+            it "fails" do
               expect { subject.validate!(machine) }.to raise_error(Vagrant::Errors::ConfigInvalid)
             end
           end
@@ -89,8 +89,8 @@ describe VagrantPlugins::Omnibus::Config do
       end
     end # describe chef_version
 
-    describe 'not specified chef_version validation' do
-      it 'passes' do
+    describe "not specified chef_version validation" do
+      it "passes" do
         Gem::DependencyInstaller.any_instance.stub(:find_gems_with_sources).and_return([])
         expect { subject.validate!(machine) }.to_not raise_error
       end
