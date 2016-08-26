@@ -1,10 +1,4 @@
-# We have to use `require_relative` until RSpec 2.14.0. As non-standard RSpec
-# default paths are not on the $LOAD_PATH.
-#
-# More info here:
-# https://github.com/rspec/rspec-core/pull/831
-#
-require_relative "../spec_helper"
+require "spec_helper"
 
 # rubocop:disable LineLength
 
@@ -21,39 +15,66 @@ describe VagrantPlugins::Omnibus::Config do
     end
   end
 
-  describe "defaults" do
-    its(:chef_version) { should be_nil }
-    its(:install_url) { should be_nil }
-    its(:cache_packages) { should be_true }
+  context "default values" do
+    describe "#chef_version" do
+      subject { super().chef_version }
+      it { is_expected.to be_nil }
+    end
+
+    describe "#install_url" do
+      subject { super().install_url }
+      it { is_expected.to be_nil }
+    end
+
+    describe "#cache_packages" do
+      subject { super().cache_packages }
+      it { is_expected.to be_truthy }
+    end
   end
 
-  describe "should no longer resolve :latest to a Chef version" do
+  describe "no longer resolves :latest to a Chef version" do
     let(:chef_version) { :latest }
-    its(:chef_version) { should eql(:latest) }
+
+    describe "#chef_version" do
+      subject { super().chef_version }
+      it { is_expected.to eql(:latest) }
+    end
   end
 
   describe "setting a custom `install_url`" do
     let(:install_url) { "http://some_path.com/install.sh" }
-    its(:install_url) { should eq("http://some_path.com/install.sh") }
+
+    describe "#install_url" do
+      subject { super().install_url }
+      it { is_expected.to eq("http://some_path.com/install.sh") }
+    end
   end
 
   describe "the `cache_packages` config option behaves truthy" do
     [true, "something", :cachier].each do |obj|
       describe "when `#{obj}` (#{obj.class})" do
         let(:cache_packages) { obj }
-        its(:cache_packages) { should be_true }
+
+        describe "#cache_packages" do
+          subject { super().cache_packages }
+          it { is_expected.to be_truthy }
+        end
       end
     end
     [nil, false].each do |obj|
       describe "when `#{obj}` (#{obj.class})" do
         let(:cache_packages) { obj }
-        its(:cache_packages) { should be_false }
+
+        describe "#cache_packages" do
+          subject { super().cache_packages }
+          it { is_expected.to be_falsey }
+        end
       end
     end
   end
 
   describe "validate" do
-    it "should be no-op" do
+    it "is a be no-op" do
       expect(subject.validate(machine)).to eq("VagrantPlugins::Omnibus::Config" => [])
     end
   end
@@ -91,7 +112,7 @@ describe VagrantPlugins::Omnibus::Config do
 
     describe "not specified chef_version validation" do
       it "passes" do
-        Gem::DependencyInstaller.any_instance.stub(:find_gems_with_sources).and_return([])
+        allow_any_instance_of(Gem::DependencyInstaller).to receive(:find_gems_with_sources).and_return([])
         expect { subject.validate!(machine) }.to_not raise_error
       end
     end # describe not specified chef_version validation
