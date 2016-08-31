@@ -24,5 +24,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 11.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "chefstyle", "~> 0.4.0"
-  spec.add_development_dependency "github_changelog_generator"
 end

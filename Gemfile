@@ -21,3 +21,8 @@ group :docs do
   gem "redcarpet", "~> 2.2"
   gem "github-markup", "~> 0.7"
 end
+
+group :changelog do
+  gem "github_changelog_generator"
+  gem "rack", "< 2" if Gem::Version.new(RUBY_VERSION) <= Gem::Version.new("2.2.2") # allows for Ruby 2.1.9 compatibility
+end
