@@ -83,5 +83,16 @@ namespace :travis do
   task ci: ["style:ruby", "test:unit"]
 end
 
+require "vagrant-omnibus/version"
+require "github_changelog_generator/task"
+
+GitHubChangelogGenerator::RakeTask.new :changelog do |config|
+  config.issues = false
+  config.future_release = VagrantPlugins::Omnibus::VERSION
+  config.enhancement_labels = "enhancement,Enhancement,New Feature".split(",")
+  config.bug_labels = "bug,Bug,Improvement,Upstream Bug".split(",")
+  config.exclude_labels = "duplicate,question,invalid,wontfix,no_changelog,Exclude From Changelog".split(",")
+end
+
 # The default rake task should just run it all
 task default: ["style:ruby", "test:unit", "test:acceptance:virtualbox"]
