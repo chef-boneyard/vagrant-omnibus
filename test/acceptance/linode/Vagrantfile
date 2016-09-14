@@ -10,8 +10,8 @@ Vagrant.configure('2') do |config|
   config.vm.provider :linode do |provider, override|
     provider.token = ENV['LINODE_API_KEY']
     provider.datacenter = 'newark'
-    provider.plan = '1024'
-    provider.distribution = 'Ubuntu 12.04 LTS'
+    provider.planid = 1
+    provider.distribution = 'Ubuntu 14.04 LTS'
     override.ssh.private_key_path = '~/.ssh/id_rsa'
   end
 
