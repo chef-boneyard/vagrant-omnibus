@@ -19,9 +19,15 @@ The plugin should work correctly with most all providers that hook into `Vagrant
 
 Ensure you have downloaded and installed Vagrant 1.1 or newer from the [Vagrant downloads page](https://www.vagrantup.com/downloads.html). If you require Windows support then Vagrant 1.6.1 or newer is needed.
 
-Installation is performed in the prescribed manner for Vagrant 1.1 plugins.
+For Vagrant 1.5 or newer, run:
 
+```console
+$ vagrant plugin install omnibus
 ```
+
+For older versions of Vagrant, you will need to prepend `vagrant-`.
+
+```console
 $ vagrant plugin install vagrant-omnibus
 ```
 
