@@ -230,7 +230,7 @@ module VagrantPlugins
                   echo Downloading Chef %version% for Windows...
                   powershell -command "(New-Object System.Net.WebClient).DownloadFile('#{url}?v=%version%', '%dest%')"
                   echo Installing Chef %version%
-                  msiexec /q /i %dest%
+                  msiexec /q /i "%dest%"
                 EOH
               end
               # rubocop:enable LineLength, SpaceAroundBlockBraces
