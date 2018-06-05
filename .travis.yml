@@ -8,13 +8,6 @@ branches:
   only:
     - master
 
-before_install:
-  - rvm @global do gem uninstall bundler -a -x -I || true
-  - gem uninstall bundler --all --executables || true
-  - gem install bundler --version '1.12.5'
-  - rm -f .bundle/config
-  - bundle --version
-
 bundler_args: --jobs 7 --without=acceptance
 
 script:
