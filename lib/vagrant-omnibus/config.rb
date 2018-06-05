@@ -59,7 +59,7 @@ module VagrantPlugins
 
         if !chef_version.nil? && !valid_chef_version?(chef_version)
           msg = <<-EOH
-'#{ chef_version }' is not a valid version of Chef.
+'#{chef_version}' is not a valid version of Chef.
 
 A list of valid versions can be found at: https://downloads.chef.io/chef-client/
           EOH
@@ -89,7 +89,7 @@ A list of valid versions can be found at: https://downloads.chef.io/chef-client/
           @logger.debug("#{version} is not a valid Chef version: #{e}")
           return false
         end
-        return !available.empty?
+        !available.empty?
       end
 
       def dependency_installer

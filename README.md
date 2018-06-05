@@ -1,6 +1,6 @@
 # vagrant-omnibus
 
-[![Gem Version](https://badge.fury.io/rb/vagrant-omnibus.svg)](https://rubygems.org/gems/vagrant-omnibus) [![Build Status](https://travis-ci.org/chef/vagrant-omnibus.svg?branch=master)](https://travis-ci.org/chef/vagrant-omnibus) [![Dependency Status](https://gemnasium.com/chef/vagrant-omnibus.svg)](https://gemnasium.com/chef/vagrant-omnibus) [![Code Climate](https://codeclimate.com/github/chef/vagrant-omnibus.svg)](https://codeclimate.com/github/chef/vagrant-omnibus)
+[![Gem Version](https://badge.fury.io/rb/vagrant-omnibus.svg)](https://rubygems.org/gems/vagrant-omnibus) [![Build Status](https://travis-ci.org/chef/vagrant-omnibus.svg?branch=master)](https://travis-ci.org/chef/vagrant-omnibus) [![Code Climate](https://codeclimate.com/github/chef/vagrant-omnibus.svg)](https://codeclimate.com/github/chef/vagrant-omnibus)
 
 A Vagrant plugin that ensures the desired version of Chef is installed via the platform-specific Omnibus packages. This proves very useful when using Vagrant with provisioner-less baseboxes OR cloud images.
 
@@ -12,7 +12,7 @@ The plugin should work correctly with most all providers that hook into `Vagrant
 - VMWare Fusion (can be [purchased from Hashicorp](https://www.vagrantup.com/vmware/))
 - LXC (ships in [vagrant-lxc](https://github.com/fgrehm/vagrant-lxc))
 - OpenStack (ships in [vagrant-openstack-plugin](https://github.com/cloudbau/vagrant-openstack-plugin))
-- Digital Ocean (ships in [vagrant-digitalocean](https://github.com/smdahlen/vagrant-digitalocean))
+- DigitalOcean (ships in [vagrant-digitalocean](https://github.com/smdahlen/vagrant-digitalocean))
 - Parallels Desktop (ships in [vagrant-parallels](https://github.com/yshahin/vagrant-parallels))
 - Linode (ships in [vagrant-linode](https://github.com/displague/vagrant-linode))
 
@@ -47,7 +47,7 @@ Install a specific version of Chef:
 ```ruby
 Vagrant.configure("2") do |config|
 
-  config.omnibus.chef_version = "11.4.0"
+  config.omnibus.chef_version = "14.2.0"
 
   ...
 
@@ -99,7 +99,7 @@ Vagrant.configure("2") do |config|
 
     ...
 
-    old_chef_config.omnibus.chef_version = "10.24.0"
+    old_chef_config.omnibus.chef_version = "13.9.1"
 
     ...
 
