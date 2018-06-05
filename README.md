@@ -14,6 +14,7 @@ The plugin should work correctly with most all providers that hook into `Vagrant
 - OpenStack (ships in [vagrant-openstack-plugin](https://github.com/cloudbau/vagrant-openstack-plugin))
 - Digital Ocean (ships in [vagrant-digitalocean](https://github.com/smdahlen/vagrant-digitalocean))
 - Parallels Desktop (ships in [vagrant-parallels](https://github.com/yshahin/vagrant-parallels))
+- Linode (ships in [vagrant-linode](https://github.com/displague/vagrant-linode))
 
 ## Installation
 
