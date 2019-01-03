@@ -1,5 +1,11 @@
 # vagrant-omnibus
 
+## Deprecation Warning
+
+This is no longer an actively maintained Chef project. We believe that Test Kitchen offers a far superior development and testing experience as it allows fine grained control of versions, better platform support, and and overall better experience. If this project works for you that's great, but we'd highly suggest using https://kitchen.ci/ instead.
+
+---
+
 [![Gem Version](https://badge.fury.io/rb/vagrant-omnibus.svg)](https://rubygems.org/gems/vagrant-omnibus) [![Build Status](https://travis-ci.org/chef/vagrant-omnibus.svg?branch=master)](https://travis-ci.org/chef/vagrant-omnibus) [![Code Climate](https://codeclimate.com/github/chef/vagrant-omnibus.svg)](https://codeclimate.com/github/chef/vagrant-omnibus)
 
 A Vagrant plugin that ensures the desired version of Chef is installed via the platform-specific Omnibus packages. This proves very useful when using Vagrant with provisioner-less baseboxes OR cloud images.
