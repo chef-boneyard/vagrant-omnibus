@@ -228,7 +228,7 @@ module VagrantPlugins
                   set version=%1
                   set dest=%~dp0chef-client-%version%-1.windows.msi
                   echo Downloading Chef %version% for Windows...
-                  powershell -command "(New-Object System.Net.WebClient).DownloadFile('#{url}?v=%version%', '%dest%')"
+                  powershell -command "if(test-path '#{url}/chef-client*%version%*.msi'){[array]$tempstore = dir #{url} | ?{$_.name -like 'chef-client*%version%*.msi'};copy $tempstore[0].fullname %dest%}else{(New-Object System.Net.WebClient).DownloadFile('#{url}?v=%version%', '%dest%')}"
                   echo Installing Chef %version%
                   msiexec /q /i "%dest%"
                 EOH
